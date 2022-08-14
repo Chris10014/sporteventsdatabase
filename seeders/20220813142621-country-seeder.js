@@ -9,8 +9,7 @@ module.exports = {  async up (queryInterface, Sequelize) {    /**
      * }], {});
     */
    return queryInterface.bulkInsert("Countries", [
-     {   
-          
+     {            
        country_code: "AF",
        phone_code: "93",
        country_name_en: "Afghanistan",
