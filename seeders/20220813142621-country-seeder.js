@@ -1,19 +1,16 @@
 'use strict';
 
-module.exports = {
-  async up (queryInterface, Sequelize) {
-    /**
+module.exports = {  async up (queryInterface, Sequelize) {    /**
      * Add seed commands here.
      *
      * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
+     * await queryInterface.bulkInsert('People', [{     *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
     */
    return queryInterface.bulkInsert("Countries", [
-     {
-       id: "5",
+     {   
+          
        country_code: "AF",
        phone_code: "93",
        country_name_en: "Afghanistan",
@@ -25,8 +22,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "6",
+     {       
        country_code: "AX",
        phone_code: "358",
        country_name_en: "Aland Islands",
@@ -38,8 +34,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "7",
+     {       
        country_code: "AL",
        phone_code: "355",
        country_name_en: "Albania",
@@ -51,8 +46,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "8",
+     {       
        country_code: "DZ",
        phone_code: "213",
        country_name_en: "Algeria",
@@ -64,8 +58,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "9",
+     {       
        country_code: "AS",
        phone_code: "1684",
        country_name_en: "American Samoa",
@@ -77,8 +70,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "10",
+     {       
        country_code: "AD",
        phone_code: "376",
        country_name_en: "Andorra",
@@ -90,8 +82,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "11",
+     {       
        country_code: "AO",
        phone_code: "244",
        country_name_en: "Angola",
@@ -103,8 +94,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "12",
+     {       
        country_code: "AI",
        phone_code: "1264",
        country_name_en: "Anguilla",
@@ -116,8 +106,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "13",
+     {       
        country_code: "AQ",
        phone_code: "672",
        country_name_en: "Antarctica",
@@ -129,8 +118,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "14",
+     {       
        country_code: "AG",
        phone_code: "1268",
        country_name_en: "Antigua and Barbuda",
@@ -142,8 +130,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "15",
+     {       
        country_code: "AR",
        phone_code: "54",
        country_name_en: "Argentina",
@@ -155,8 +142,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "16",
+     {       
        country_code: "AM",
        phone_code: "374",
        country_name_en: "Armenia",
@@ -168,8 +154,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "17",
+     {       
        country_code: "AW",
        phone_code: "297",
        country_name_en: "Aruba",
@@ -181,8 +166,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "18",
+     {       
        country_code: "AU",
        phone_code: "61",
        country_name_en: "Australia",
@@ -194,8 +178,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "19",
+     {       
        country_code: "AT",
        phone_code: "43",
        country_name_en: "Austria",
@@ -207,8 +190,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "20",
+     {       
        country_code: "AZ",
        phone_code: "994",
        country_name_en: "Azerbaijan",
@@ -220,8 +202,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "21",
+     {       
        country_code: "BS",
        phone_code: "1242",
        country_name_en: "Bahamas",
@@ -233,8 +214,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "22",
+     {       
        country_code: "BH",
        phone_code: "973",
        country_name_en: "Bahrain",
@@ -246,8 +226,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "23",
+     {       
        country_code: "BD",
        phone_code: "880",
        country_name_en: "Bangladesh",
@@ -259,8 +238,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "24",
+     {       
        country_code: "BB",
        phone_code: "1246",
        country_name_en: "Barbados",
@@ -272,8 +250,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "25",
+     {       
        country_code: "BY",
        phone_code: "375",
        country_name_en: "Belarus",
@@ -285,8 +262,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "26",
+     {       
        country_code: "BE",
        phone_code: "32",
        country_name_en: "Belgium",
@@ -298,8 +274,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "27",
+     {       
        country_code: "BZ",
        phone_code: "501",
        country_name_en: "Belize",
@@ -311,8 +286,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "28",
+     {       
        country_code: "BJ",
        phone_code: "229",
        country_name_en: "Benin",
@@ -324,8 +298,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "29",
+     {       
        country_code: "BM",
        phone_code: "1441",
        country_name_en: "Bermuda",
@@ -337,8 +310,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "30",
+     {       
        country_code: "BT",
        phone_code: "975",
        country_name_en: "Bhutan",
@@ -350,8 +322,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "31",
+     {       
        country_code: "BO",
        phone_code: "591",
        country_name_en: "Bolivia",
@@ -363,8 +334,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "32",
+     {       
        country_code: "BQ",
        phone_code: "599",
        country_name_en: "Bonaire, Sint Eustatius and Saba",
@@ -376,8 +346,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "33",
+     {       
        country_code: "BA",
        phone_code: "387",
        country_name_en: "Bosnia and Herzegovina",
@@ -389,8 +358,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "34",
+     {       
        country_code: "BW",
        phone_code: "267",
        country_name_en: "Botswana",
@@ -402,8 +370,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "35",
+     {       
        country_code: "BV",
        phone_code: "55",
        country_name_en: "Bouvet Island",
@@ -415,8 +382,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "36",
+     {       
        country_code: "BR",
        phone_code: "55",
        country_name_en: "Brazil",
@@ -428,8 +394,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "37",
+     {       
        country_code: "IO",
        phone_code: "246",
        country_name_en: "British Indian Ocean Territory",
@@ -441,8 +406,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "38",
+     {       
        country_code: "BN",
        phone_code: "673",
        country_name_en: "Brunei Darussalam",
@@ -454,8 +418,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "39",
+     {       
        country_code: "BG",
        phone_code: "359",
        country_name_en: "Bulgaria",
@@ -467,8 +430,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "40",
+     {       
        country_code: "BF",
        phone_code: "226",
        country_name_en: "Burkina Faso",
@@ -480,8 +442,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "41",
+     {       
        country_code: "BI",
        phone_code: "257",
        country_name_en: "Burundi",
@@ -493,8 +454,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "42",
+     {       
        country_code: "KH",
        phone_code: "855",
        country_name_en: "Cambodia",
@@ -506,8 +466,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "43",
+     {       
        country_code: "CM",
        phone_code: "237",
        country_name_en: "Cameroon",
@@ -519,8 +478,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "44",
+     {       
        country_code: "CA",
        phone_code: "1",
        country_name_en: "Canada",
@@ -532,8 +490,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "45",
+     {       
        country_code: "CV",
        phone_code: "238",
        country_name_en: "Cape Verde",
@@ -545,8 +502,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "46",
+     {       
        country_code: "KY",
        phone_code: "1345",
        country_name_en: "Cayman Islands",
@@ -558,8 +514,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "47",
+     {       
        country_code: "CF",
        phone_code: "236",
        country_name_en: "Central African Republic",
@@ -571,8 +526,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "48",
+     {       
        country_code: "TD",
        phone_code: "235",
        country_name_en: "Chad",
@@ -584,8 +538,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "49",
+     {       
        country_code: "CL",
        phone_code: "56",
        country_name_en: "Chile",
@@ -597,8 +550,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "50",
+     {       
        country_code: "CN",
        phone_code: "86",
        country_name_en: "China",
@@ -610,8 +562,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "51",
+     {       
        country_code: "CX",
        phone_code: "61",
        country_name_en: "Christmas Island",
@@ -623,8 +574,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "52",
+     {       
        country_code: "CC",
        phone_code: "672",
        country_name_en: "Cocos (Keeling) Islands",
@@ -636,8 +586,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "53",
+     {       
        country_code: "CO",
        phone_code: "57",
        country_name_en: "Colombia",
@@ -649,8 +598,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "54",
+     {       
        country_code: "KM",
        phone_code: "269",
        country_name_en: "Comoros",
@@ -662,8 +610,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "55",
+     {       
        country_code: "CG",
        phone_code: "242",
        country_name_en: "Congo",
@@ -675,8 +622,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "56",
+     {       
        country_code: "CD",
        phone_code: "242",
        country_name_en: "Congo, Democratic Republic of the Congo",
@@ -688,8 +634,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "57",
+     {       
        country_code: "CK",
        phone_code: "682",
        country_name_en: "Cook Islands",
@@ -701,8 +646,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "58",
+     {       
        country_code: "CR",
        phone_code: "506",
        country_name_en: "Costa Rica",
@@ -714,8 +658,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "59",
+     {       
        country_code: "CI",
        phone_code: "225",
        country_name_en: "Cote D\\'Ivoire",
@@ -727,8 +670,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "60",
+     {       
        country_code: "HR",
        phone_code: "385",
        country_name_en: "Croatia",
@@ -740,8 +682,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "61",
+     {       
        country_code: "CU",
        phone_code: "53",
        country_name_en: "Cuba",
@@ -753,8 +694,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "62",
+     {       
        country_code: "CW",
        phone_code: "599",
        country_name_en: "Curacao",
@@ -766,8 +706,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "63",
+     {       
        country_code: "CY",
        phone_code: "357",
        country_name_en: "Cyprus",
@@ -779,8 +718,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "64",
+     {       
        country_code: "CZ",
        phone_code: "420",
        country_name_en: "Czech Republic",
@@ -792,8 +730,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "65",
+     {       
        country_code: "DK",
        phone_code: "45",
        country_name_en: "Denmark",
@@ -805,8 +742,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "66",
+     {       
        country_code: "DJ",
        phone_code: "253",
        country_name_en: "Djibouti",
@@ -818,8 +754,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "67",
+     {       
        country_code: "DM",
        phone_code: "1767",
        country_name_en: "Dominica",
@@ -831,8 +766,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "68",
+     {       
        country_code: "DO",
        phone_code: "1809",
        country_name_en: "Dominican Republic",
@@ -844,8 +778,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "69",
+     {       
        country_code: "EC",
        phone_code: "593",
        country_name_en: "Ecuador",
@@ -857,8 +790,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "70",
+     {       
        country_code: "EG",
        phone_code: "20",
        country_name_en: "Egypt",
@@ -870,8 +802,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "71",
+     {       
        country_code: "SV",
        phone_code: "503",
        country_name_en: "El Salvador",
@@ -883,8 +814,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "72",
+     {       
        country_code: "GQ",
        phone_code: "240",
        country_name_en: "Equatorial Guinea",
@@ -896,8 +826,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "73",
+     {       
        country_code: "ER",
        phone_code: "291",
        country_name_en: "Eritrea",
@@ -909,8 +838,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "74",
+     {       
        country_code: "EE",
        phone_code: "372",
        country_name_en: "Estonia",
@@ -922,8 +850,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "75",
+     {       
        country_code: "ET",
        phone_code: "251",
        country_name_en: "Ethiopia",
@@ -935,8 +862,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "76",
+     {       
        country_code: "FK",
        phone_code: "500",
        country_name_en: "Falkland Islands (Malvinas)",
@@ -948,8 +874,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "77",
+     {       
        country_code: "FO",
        phone_code: "298",
        country_name_en: "Faroe Islands",
@@ -961,8 +886,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "78",
+     {       
        country_code: "FJ",
        phone_code: "679",
        country_name_en: "Fiji",
@@ -974,8 +898,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "79",
+     {       
        country_code: "FI",
        phone_code: "358",
        country_name_en: "Finland",
@@ -987,8 +910,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "80",
+     {       
        country_code: "FR",
        phone_code: "33",
        country_name_en: "France",
@@ -1000,8 +922,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "81",
+     {       
        country_code: "GF",
        phone_code: "594",
        country_name_en: "French Guiana",
@@ -1013,8 +934,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "82",
+     {       
        country_code: "PF",
        phone_code: "689",
        country_name_en: "French Polynesia",
@@ -1026,8 +946,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "83",
+     {       
        country_code: "TF",
        phone_code: "262",
        country_name_en: "French Southern Territories",
@@ -1039,8 +958,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "84",
+     {       
        country_code: "GA",
        phone_code: "241",
        country_name_en: "Gabon",
@@ -1052,8 +970,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "85",
+     {       
        country_code: "GM",
        phone_code: "220",
        country_name_en: "Gambia",
@@ -1065,8 +982,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "86",
+     {       
        country_code: "GE",
        phone_code: "995",
        country_name_en: "Georgia",
@@ -1078,8 +994,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "87",
+     {       
        country_code: "DE",
        phone_code: "49",
        country_name_en: "Germany",
@@ -1091,8 +1006,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "88",
+     {       
        country_code: "GH",
        phone_code: "233",
        country_name_en: "Ghana",
@@ -1104,8 +1018,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "89",
+     {       
        country_code: "GI",
        phone_code: "350",
        country_name_en: "Gibraltar",
@@ -1117,8 +1030,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "90",
+     {       
        country_code: "GR",
        phone_code: "30",
        country_name_en: "Greece",
@@ -1130,8 +1042,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "91",
+     {       
        country_code: "GL",
        phone_code: "299",
        country_name_en: "Greenland",
@@ -1143,8 +1054,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "92",
+     {       
        country_code: "GD",
        phone_code: "1473",
        country_name_en: "Grenada",
@@ -1156,8 +1066,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "93",
+     {       
        country_code: "GP",
        phone_code: "590",
        country_name_en: "Guadeloupe",
@@ -1169,8 +1078,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "94",
+     {       
        country_code: "GU",
        phone_code: "1671",
        country_name_en: "Guam",
@@ -1182,8 +1090,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "95",
+     {       
        country_code: "GT",
        phone_code: "502",
        country_name_en: "Guatemala",
@@ -1195,8 +1102,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "96",
+     {       
        country_code: "GG",
        phone_code: "44",
        country_name_en: "Guernsey",
@@ -1208,8 +1114,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "97",
+     {       
        country_code: "GN",
        phone_code: "224",
        country_name_en: "Guinea",
@@ -1221,8 +1126,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "98",
+     {       
        country_code: "GW",
        phone_code: "245",
        country_name_en: "Guinea-Bissau",
@@ -1234,8 +1138,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "99",
+     {       
        country_code: "GY",
        phone_code: "592",
        country_name_en: "Guyana",
@@ -1247,8 +1150,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "100",
+     {       
        country_code: "HT",
        phone_code: "509",
        country_name_en: "Haiti",
@@ -1260,8 +1162,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "101",
+     {       
        country_code: "HM",
        phone_code: "0",
        country_name_en: "Heard Island and Mcdonald Islands",
@@ -1273,8 +1174,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "102",
+     {       
        country_code: "VA",
        phone_code: "39",
        country_name_en: "Holy See (Vatican City State)",
@@ -1286,8 +1186,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "103",
+     {       
        country_code: "HN",
        phone_code: "504",
        country_name_en: "Honduras",
@@ -1299,8 +1198,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "104",
+     {       
        country_code: "HK",
        phone_code: "852",
        country_name_en: "Hong Kong",
@@ -1312,8 +1210,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "105",
+     {       
        country_code: "HU",
        phone_code: "36",
        country_name_en: "Hungary",
@@ -1325,8 +1222,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "106",
+     {       
        country_code: "IS",
        phone_code: "354",
        country_name_en: "Iceland",
@@ -1338,8 +1234,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "107",
+     {       
        country_code: "IN",
        phone_code: "91",
        country_name_en: "India",
@@ -1351,8 +1246,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "108",
+     {       
        country_code: "ID",
        phone_code: "62",
        country_name_en: "Indonesia",
@@ -1364,8 +1258,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "109",
+     {       
        country_code: "IR",
        phone_code: "98",
        country_name_en: "Iran, Islamic Republic of",
@@ -1377,8 +1270,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "110",
+     {       
        country_code: "IQ",
        phone_code: "964",
        country_name_en: "Iraq",
@@ -1390,8 +1282,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "111",
+     {       
        country_code: "IE",
        phone_code: "353",
        country_name_en: "Ireland",
@@ -1403,8 +1294,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "112",
+     {       
        country_code: "IM",
        phone_code: "44",
        country_name_en: "Isle of Man",
@@ -1416,8 +1306,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "113",
+     {       
        country_code: "IL",
        phone_code: "972",
        country_name_en: "Israel",
@@ -1429,8 +1318,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "114",
+     {       
        country_code: "IT",
        phone_code: "39",
        country_name_en: "Italy",
@@ -1442,8 +1330,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "115",
+     {       
        country_code: "JM",
        phone_code: "1876",
        country_name_en: "Jamaica",
@@ -1455,8 +1342,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "116",
+     {       
        country_code: "JP",
        phone_code: "81",
        country_name_en: "Japan",
@@ -1468,8 +1354,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "117",
+     {       
        country_code: "JE",
        phone_code: "44",
        country_name_en: "Jersey",
@@ -1481,8 +1366,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "118",
+     {       
        country_code: "JO",
        phone_code: "962",
        country_name_en: "Jordan",
@@ -1494,8 +1378,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "119",
+     {       
        country_code: "KZ",
        phone_code: "7",
        country_name_en: "Kazakhstan",
@@ -1507,8 +1390,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "120",
+     {       
        country_code: "KE",
        phone_code: "254",
        country_name_en: "Kenya",
@@ -1520,8 +1402,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "121",
+     {       
        country_code: "KI",
        phone_code: "686",
        country_name_en: "Kiribati",
@@ -1533,8 +1414,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "122",
+     {       
        country_code: "KP",
        phone_code: "850",
        country_name_en: "Korea, Democratic People\\'s Republic of",
@@ -1546,8 +1426,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "123",
+     {       
        country_code: "KR",
        phone_code: "82",
        country_name_en: "Korea, Republic of",
@@ -1559,8 +1438,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "124",
+     {       
        country_code: "XK",
        phone_code: "381",
        country_name_en: "Kosovo",
@@ -1572,8 +1450,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "125",
+     {       
        country_code: "KW",
        phone_code: "965",
        country_name_en: "Kuwait",
@@ -1585,8 +1462,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "126",
+     {       
        country_code: "KG",
        phone_code: "996",
        country_name_en: "Kyrgyzstan",
@@ -1598,8 +1474,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "127",
+     {       
        country_code: "LA",
        phone_code: "856",
        country_name_en: "Lao People\\'s Democratic Republic",
@@ -1611,8 +1486,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "128",
+     {       
        country_code: "LV",
        phone_code: "371",
        country_name_en: "Latvia",
@@ -1624,8 +1498,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "129",
+     {       
        country_code: "LB",
        phone_code: "961",
        country_name_en: "Lebanon",
@@ -1637,8 +1510,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "130",
+     {       
        country_code: "LS",
        phone_code: "266",
        country_name_en: "Lesotho",
@@ -1650,8 +1522,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "131",
+     {       
        country_code: "LR",
        phone_code: "231",
        country_name_en: "Liberia",
@@ -1663,8 +1534,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "132",
+     {       
        country_code: "LY",
        phone_code: "218",
        country_name_en: "Libyan Arab Jamahiriya",
@@ -1676,8 +1546,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "133",
+     {       
        country_code: "LI",
        phone_code: "423",
        country_name_en: "Liechtenstein",
@@ -1689,8 +1558,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "134",
+     {       
        country_code: "LT",
        phone_code: "370",
        country_name_en: "Lithuania",
@@ -1702,8 +1570,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "135",
+     {       
        country_code: "LU",
        phone_code: "352",
        country_name_en: "Luxembourg",
@@ -1715,8 +1582,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "136",
+     {       
        country_code: "MO",
        phone_code: "853",
        country_name_en: "Macao",
@@ -1728,8 +1594,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "137",
+     {       
        country_code: "MK",
        phone_code: "389",
        country_name_en: "Macedonia, the Former Yugoslav Republic of",
@@ -1741,8 +1606,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "138",
+     {       
        country_code: "MG",
        phone_code: "261",
        country_name_en: "Madagascar",
@@ -1754,8 +1618,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "139",
+     {       
        country_code: "MW",
        phone_code: "265",
        country_name_en: "Malawi",
@@ -1767,8 +1630,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "140",
+     {       
        country_code: "MY",
        phone_code: "60",
        country_name_en: "Malaysia",
@@ -1780,8 +1642,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "141",
+     {       
        country_code: "MV",
        phone_code: "960",
        country_name_en: "Maldives",
@@ -1793,8 +1654,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "142",
+     {       
        country_code: "ML",
        phone_code: "223",
        country_name_en: "Mali",
@@ -1806,8 +1666,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "143",
+     {       
        country_code: "MT",
        phone_code: "356",
        country_name_en: "Malta",
@@ -1819,8 +1678,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "144",
+     {       
        country_code: "MH",
        phone_code: "692",
        country_name_en: "Marshall Islands",
@@ -1832,8 +1690,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "145",
+     {       
        country_code: "MQ",
        phone_code: "596",
        country_name_en: "Martinique",
@@ -1845,8 +1702,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "146",
+     {       
        country_code: "MR",
        phone_code: "222",
        country_name_en: "Mauritania",
@@ -1858,8 +1714,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "147",
+     {       
        country_code: "MU",
        phone_code: "230",
        country_name_en: "Mauritius",
@@ -1871,8 +1726,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "148",
+     {       
        country_code: "YT",
        phone_code: "269",
        country_name_en: "Mayotte",
@@ -1884,8 +1738,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "149",
+     {       
        country_code: "MX",
        phone_code: "52",
        country_name_en: "Mexico",
@@ -1897,8 +1750,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "150",
+     {       
        country_code: "FM",
        phone_code: "691",
        country_name_en: "Micronesia, Federated States of",
@@ -1910,8 +1762,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "151",
+     {       
        country_code: "MD",
        phone_code: "373",
        country_name_en: "Moldova, Republic of",
@@ -1923,8 +1774,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "152",
+     {       
        country_code: "MC",
        phone_code: "377",
        country_name_en: "Monaco",
@@ -1936,8 +1786,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "153",
+     {       
        country_code: "MN",
        phone_code: "976",
        country_name_en: "Mongolia",
@@ -1949,8 +1798,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "154",
+     {       
        country_code: "ME",
        phone_code: "382",
        country_name_en: "Montenegro",
@@ -1962,8 +1810,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "155",
+     {       
        country_code: "MS",
        phone_code: "1664",
        country_name_en: "Montserrat",
@@ -1975,8 +1822,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "156",
+     {       
        country_code: "MA",
        phone_code: "212",
        country_name_en: "Morocco",
@@ -1988,8 +1834,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "157",
+     {       
        country_code: "MZ",
        phone_code: "258",
        country_name_en: "Mozambique",
@@ -2001,8 +1846,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "158",
+     {       
        country_code: "MM",
        phone_code: "95",
        country_name_en: "Myanmar",
@@ -2014,8 +1858,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "159",
+     {       
        country_code: "NA",
        phone_code: "264",
        country_name_en: "Namibia",
@@ -2027,8 +1870,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "160",
+     {       
        country_code: "NR",
        phone_code: "674",
        country_name_en: "Nauru",
@@ -2040,8 +1882,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "161",
+     {       
        country_code: "NL",
        phone_code: "31",
        country_name_en: "Netherlands",
@@ -2053,8 +1894,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "162",
+     {       
        country_code: "AN",
        phone_code: "599",
        country_name_en: "Netherlands Antilles",
@@ -2066,8 +1906,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "163",
+     {       
        country_code: "NC",
        phone_code: "687",
        country_name_en: "New Caledonia",
@@ -2079,8 +1918,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "164",
+     {       
        country_code: "NZ",
        phone_code: "64",
        country_name_en: "New Zealand",
@@ -2092,8 +1930,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "165",
+     {       
        country_code: "NP",
        phone_code: "977",
        country_name_en: "Nepal",
@@ -2105,8 +1942,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "166",
+     {       
        country_code: "NI",
        phone_code: "505",
        country_name_en: "Nicaragua",
@@ -2118,8 +1954,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "167",
+     {       
        country_code: "NE",
        phone_code: "227",
        country_name_en: "Niger",
@@ -2131,8 +1966,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "168",
+     {       
        country_code: "NG",
        phone_code: "234",
        country_name_en: "Nigeria",
@@ -2144,8 +1978,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "169",
+     {       
        country_code: "NU",
        phone_code: "683",
        country_name_en: "Niue",
@@ -2157,8 +1990,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "170",
+     {       
        country_code: "NF",
        phone_code: "672",
        country_name_en: "Norfolk Island",
@@ -2170,8 +2002,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "171",
+     {       
        country_code: "MP",
        phone_code: "1670",
        country_name_en: "Northern Mariana Islands",
@@ -2183,8 +2014,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "172",
+     {       
        country_code: "NO",
        phone_code: "47",
        country_name_en: "Norway",
@@ -2196,8 +2026,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "173",
+     {       
        country_code: "OM",
        phone_code: "968",
        country_name_en: "Oman",
@@ -2209,8 +2038,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "174",
+     {       
        country_code: "PK",
        phone_code: "92",
        country_name_en: "Pakistan",
@@ -2222,8 +2050,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "175",
+     {       
        country_code: "PW",
        phone_code: "680",
        country_name_en: "Palau",
@@ -2235,8 +2062,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "176",
+     {       
        country_code: "PS",
        phone_code: "970",
        country_name_en: "Palestinian Territory, Occupied",
@@ -2248,8 +2074,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "177",
+     {       
        country_code: "PA",
        phone_code: "507",
        country_name_en: "Panama",
@@ -2261,8 +2086,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "178",
+     {       
        country_code: "PG",
        phone_code: "675",
        country_name_en: "Papua New Guinea",
@@ -2274,8 +2098,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "179",
+     {       
        country_code: "PY",
        phone_code: "595",
        country_name_en: "Paraguay",
@@ -2287,8 +2110,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "180",
+     {       
        country_code: "PE",
        phone_code: "51",
        country_name_en: "Peru",
@@ -2300,8 +2122,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "181",
+     {       
        country_code: "PH",
        phone_code: "63",
        country_name_en: "Philippines",
@@ -2313,8 +2134,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "182",
+     {       
        country_code: "PN",
        phone_code: "64",
        country_name_en: "Pitcairn",
@@ -2326,8 +2146,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "183",
+     {       
        country_code: "PL",
        phone_code: "48",
        country_name_en: "Poland",
@@ -2339,8 +2158,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "184",
+     {       
        country_code: "PT",
        phone_code: "351",
        country_name_en: "Portugal",
@@ -2352,8 +2170,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "185",
+     {       
        country_code: "PR",
        phone_code: "1787",
        country_name_en: "Puerto Rico",
@@ -2365,8 +2182,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "186",
+     {       
        country_code: "QA",
        phone_code: "974",
        country_name_en: "Qatar",
@@ -2378,8 +2194,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "187",
+     {       
        country_code: "RE",
        phone_code: "262",
        country_name_en: "Reunion",
@@ -2391,8 +2206,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "188",
+     {       
        country_code: "RO",
        phone_code: "40",
        country_name_en: "Romania",
@@ -2404,8 +2218,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "189",
+     {       
        country_code: "RU",
        phone_code: "70",
        country_name_en: "Russian Federation",
@@ -2417,8 +2230,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "190",
+     {       
        country_code: "RW",
        phone_code: "250",
        country_name_en: "Rwanda",
@@ -2430,8 +2242,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "191",
+     {       
        country_code: "BL",
        phone_code: "590",
        country_name_en: "Saint Barthelemy",
@@ -2443,8 +2254,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "192",
+     {       
        country_code: "SH",
        phone_code: "290",
        country_name_en: "Saint Helena",
@@ -2456,8 +2266,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "193",
+     {       
        country_code: "KN",
        phone_code: "1869",
        country_name_en: "Saint Kitts and Nevis",
@@ -2469,8 +2278,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "194",
+     {       
        country_code: "LC",
        phone_code: "1758",
        country_name_en: "Saint Lucia",
@@ -2482,8 +2290,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "195",
+     {       
        country_code: "MF",
        phone_code: "590",
        country_name_en: "Saint Martin",
@@ -2495,8 +2302,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "196",
+     {       
        country_code: "PM",
        phone_code: "508",
        country_name_en: "Saint Pierre and Miquelon",
@@ -2508,8 +2314,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "197",
+     {       
        country_code: "VC",
        phone_code: "1784",
        country_name_en: "Saint Vincent and the Grenadines",
@@ -2521,8 +2326,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "198",
+     {       
        country_code: "WS",
        phone_code: "684",
        country_name_en: "Samoa",
@@ -2534,8 +2338,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "199",
+     {       
        country_code: "SM",
        phone_code: "378",
        country_name_en: "San Marino",
@@ -2547,8 +2350,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "200",
+     {       
        country_code: "ST",
        phone_code: "239",
        country_name_en: "Sao Tome and Principe",
@@ -2560,8 +2362,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "201",
+     {       
        country_code: "SA",
        phone_code: "966",
        country_name_en: "Saudi Arabia",
@@ -2573,8 +2374,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "202",
+     {       
        country_code: "SN",
        phone_code: "221",
        country_name_en: "Senegal",
@@ -2586,8 +2386,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "203",
+     {       
        country_code: "RS",
        phone_code: "381",
        country_name_en: "Serbia",
@@ -2599,8 +2398,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "204",
+     {       
        country_code: "CS",
        phone_code: "381",
        country_name_en: "Serbia and Montenegro",
@@ -2612,8 +2410,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "205",
+     {       
        country_code: "SC",
        phone_code: "248",
        country_name_en: "Seychelles",
@@ -2625,8 +2422,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "206",
+     {       
        country_code: "SL",
        phone_code: "232",
        country_name_en: "Sierra Leone",
@@ -2638,8 +2434,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "207",
+     {       
        country_code: "SX",
        phone_code: "1",
        country_name_en: "Sint Maarten",
@@ -2651,8 +2446,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "208",
+     {       
        country_code: "SG",
        phone_code: "65",
        country_name_en: "Singapore",
@@ -2664,8 +2458,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "209",
+     {       
        country_code: "SK",
        phone_code: "421",
        country_name_en: "Slovakia",
@@ -2677,8 +2470,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "210",
+     {       
        country_code: "SI",
        phone_code: "386",
        country_name_en: "Slovenia",
@@ -2690,8 +2482,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "211",
+     {       
        country_code: "SB",
        phone_code: "677",
        country_name_en: "Solomon Islands",
@@ -2703,8 +2494,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "212",
+     {       
        country_code: "SO",
        phone_code: "252",
        country_name_en: "Somalia",
@@ -2716,8 +2506,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "213",
+     {       
        country_code: "ZA",
        phone_code: "27",
        country_name_en: "South Africa",
@@ -2729,8 +2518,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "214",
+     {       
        country_code: "GS",
        phone_code: "500",
        country_name_en: "South Georgia and the South Sandwich Islands",
@@ -2742,8 +2530,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "215",
+     {       
        country_code: "SS",
        phone_code: "211",
        country_name_en: "South Sudan",
@@ -2755,8 +2542,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "216",
+     {       
        country_code: "ES",
        phone_code: "34",
        country_name_en: "Spain",
@@ -2768,8 +2554,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "217",
+     {       
        country_code: "LK",
        phone_code: "94",
        country_name_en: "Sri Lanka",
@@ -2781,8 +2566,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "218",
+     {       
        country_code: "SD",
        phone_code: "249",
        country_name_en: "Sudan",
@@ -2794,8 +2578,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "219",
+     {       
        country_code: "SR",
        phone_code: "597",
        country_name_en: "Suriname",
@@ -2807,8 +2590,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "220",
+     {       
        country_code: "SJ",
        phone_code: "47",
        country_name_en: "Svalbard and Jan Mayen",
@@ -2820,8 +2602,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "221",
+     {       
        country_code: "SZ",
        phone_code: "268",
        country_name_en: "Swaziland",
@@ -2833,8 +2614,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "222",
+     {       
        country_code: "SE",
        phone_code: "46",
        country_name_en: "Sweden",
@@ -2846,8 +2626,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "223",
+     {       
        country_code: "CH",
        phone_code: "41",
        country_name_en: "Switzerland",
@@ -2859,8 +2638,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "224",
+     {       
        country_code: "SY",
        phone_code: "963",
        country_name_en: "Syrian Arab Republic",
@@ -2872,8 +2650,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "225",
+     {       
        country_code: "TW",
        phone_code: "886",
        country_name_en: "Taiwan, Province of China",
@@ -2885,8 +2662,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "226",
+     {       
        country_code: "TJ",
        phone_code: "992",
        country_name_en: "Tajikistan",
@@ -2898,8 +2674,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "227",
+     {       
        country_code: "TZ",
        phone_code: "255",
        country_name_en: "Tanzania, United Republic of",
@@ -2911,8 +2686,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "228",
+     {       
        country_code: "TH",
        phone_code: "66",
        country_name_en: "Thailand",
@@ -2924,8 +2698,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "229",
+     {       
        country_code: "TL",
        phone_code: "670",
        country_name_en: "Timor-Leste",
@@ -2937,8 +2710,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "230",
+     {       
        country_code: "TG",
        phone_code: "228",
        country_name_en: "Togo",
@@ -2950,8 +2722,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "231",
+     {       
        country_code: "TK",
        phone_code: "690",
        country_name_en: "Tokelau",
@@ -2963,8 +2734,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "232",
+     {       
        country_code: "TO",
        phone_code: "676",
        country_name_en: "Tonga",
@@ -2976,8 +2746,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "233",
+     {       
        country_code: "TT",
        phone_code: "1868",
        country_name_en: "Trinidad and Tobago",
@@ -2989,8 +2758,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "234",
+     {       
        country_code: "TN",
        phone_code: "216",
        country_name_en: "Tunisia",
@@ -3002,8 +2770,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "235",
+     {       
        country_code: "TR",
        phone_code: "90",
        country_name_en: "Turkey",
@@ -3015,8 +2782,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "236",
+     {       
        country_code: "TM",
        phone_code: "7370",
        country_name_en: "Turkmenistan",
@@ -3028,8 +2794,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "237",
+     {       
        country_code: "TC",
        phone_code: "1649",
        country_name_en: "Turks and Caicos Islands",
@@ -3041,8 +2806,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "238",
+     {       
        country_code: "TV",
        phone_code: "688",
        country_name_en: "Tuvalu",
@@ -3054,8 +2818,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "239",
+     {       
        country_code: "UG",
        phone_code: "256",
        country_name_en: "Uganda",
@@ -3067,8 +2830,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "240",
+     {       
        country_code: "UA",
        phone_code: "380",
        country_name_en: "Ukraine",
@@ -3080,8 +2842,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "241",
+     {       
        country_code: "AE",
        phone_code: "971",
        country_name_en: "United Arab Emirates",
@@ -3093,8 +2854,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "242",
+     {       
        country_code: "GB",
        phone_code: "44",
        country_name_en: "United Kingdom",
@@ -3106,8 +2866,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "243",
+     {       
        country_code: "US",
        phone_code: "1",
        country_name_en: "United States",
@@ -3119,8 +2878,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "244",
+     {       
        country_code: "UM",
        phone_code: "1",
        country_name_en: "United States Minor Outlying Islands",
@@ -3132,8 +2890,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "245",
+     {       
        country_code: "UY",
        phone_code: "598",
        country_name_en: "Uruguay",
@@ -3145,8 +2902,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "246",
+     {       
        country_code: "UZ",
        phone_code: "998",
        country_name_en: "Uzbekistan",
@@ -3158,8 +2914,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "247",
+     {       
        country_code: "VU",
        phone_code: "678",
        country_name_en: "Vanuatu",
@@ -3171,8 +2926,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "248",
+     {       
        country_code: "VE",
        phone_code: "58",
        country_name_en: "Venezuela",
@@ -3184,8 +2938,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "249",
+     {       
        country_code: "VN",
        phone_code: "84",
        country_name_en: "Viet Nam",
@@ -3197,8 +2950,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "250",
+     {       
        country_code: "VG",
        phone_code: "1284",
        country_name_en: "Virgin Islands, British",
@@ -3210,8 +2962,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "251",
+     {       
        country_code: "VI",
        phone_code: "1340",
        country_name_en: "Virgin Islands, U.s.",
@@ -3223,8 +2974,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "252",
+     {       
        country_code: "WF",
        phone_code: "681",
        country_name_en: "Wallis and Futuna",
@@ -3236,8 +2986,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "253",
+     {       
        country_code: "EH",
        phone_code: "212",
        country_name_en: "Western Sahara",
@@ -3249,8 +2998,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "254",
+     {       
        country_code: "YE",
        phone_code: "967",
        country_name_en: "Yemen",
@@ -3262,8 +3010,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "255",
+     {       
        country_code: "ZM",
        phone_code: "260",
        country_name_en: "Zambia",
@@ -3275,8 +3022,7 @@ module.exports = {
        created_at: "2022-08-06 12:37:43",
        updated_at: "2022-08-06 12:37:43",
      },
-     {
-       id: "256",
+     {       
        country_code: "ZW",
        phone_code: "263",
        country_name_en: "Zimbabwe",
@@ -3291,8 +3037,7 @@ module.exports = {
    ]);
   },
 
-  async down (queryInterface, Sequelize) {
-    /**
+  async down (queryInterface, Sequelize) {    /**
      * Add commands to revert seed here.
      *
      * Example:

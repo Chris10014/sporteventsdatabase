@@ -5,8 +5,6 @@ const Countries = require("../models/countries");
 const countryRouter = express.Router();
 countryRouter.use(express.json());
 
-//https://dev.to/nurofsun/building-simple-rest-api-with-express-js-and-mysql-140p
-
 countryRouter
   .route("/api/v1/countries", (res, req) => {
     res.sendStatus(200);
