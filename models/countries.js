@@ -2,6 +2,12 @@ const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
 
 const Countries = sequelize.define("countries", {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
   country_code: {
     type: Sequelize.STRING,
     allowNull: false,

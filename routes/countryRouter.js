@@ -24,7 +24,15 @@ countryRouter
       .catch((err) => next(err));
   })
   .post((req, res, next) => {
-    res.send("Received a POST request!");
+    Countries.create(req.body)
+    .then((country) => {
+      console.log ("Country created: ", country);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(country);
+      }, (err) => next(err)
+    )
+    .catch((err) => next(err));
   })
   .put((req, res, next) => {
     res.statusCode = 403;
@@ -50,6 +58,10 @@ countryRouter
       })
       .catch((err) => next(err));
   })
+  .post((req, res, next) => {
+    res.statusCode = 403;
+    res.end("PUT operation not supported on /countries/:countryId");
+  })
   .put((req, res, next) => {
     let countryId = req.params.countryId;
 
@@ -71,26 +83,24 @@ countryRouter
           (err) => next(err)
         )
         .catch((err) => next(err));
-    })
+    });
   })
-    .delete((req, res, next) => {
-      let countryId = req.params.countryId;
+  .delete((req, res, next) => {
+    let countryId = req.params.countryId;
 
-      Countries.findByPk(countryId)
-      .then((country)=> {
-        if(!country) {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.send(`No Country with Id ${countryId} found.`);
-          return;
-        }
-        country
-        .destroy()
-        console.log(`Country with id ${countryId} deleted.`);
+    Countries.findByPk(countryId).then((country) => {
+      if (!country) {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");
-        res.send(`Country with Id ${countryId} deleted.`);
-      })
+        res.send(`No Country with Id ${countryId} found.`);
+        return;
+      }
+      country.destroy();
+      console.log(`Country with id ${countryId} deleted.`);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.send(`Country with Id ${countryId} deleted.`);
     });
+  });
 
 module.exports = countryRouter;
