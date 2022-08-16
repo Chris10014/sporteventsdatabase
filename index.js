@@ -10,7 +10,7 @@ const sequelize = require("./services/database");
 const express = require("express");
 const countryRouter = require("./routes/countryRouter");
 
-const Countries = require("./models/countries");
+//const Countries = require("./models/countries");
 sequelize.sync({ alter: true })
   .then((result) => {
     console.log("Countries table created. ", result);

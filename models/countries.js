@@ -10,8 +10,7 @@ const Countries = sequelize.define("countries", {
   },
   country_code: {
     type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
+    allowNull: false
   },
   phone_code: {
     type: Sequelize.INTEGER,
