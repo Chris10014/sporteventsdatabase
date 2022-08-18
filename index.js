@@ -9,8 +9,8 @@ const path = require("path"); //Modul um Pfadangaben zu generieren
 const sequelize = require("./services/database");
 const express = require("express");
 const countryRouter = require("./routes/countryRouter");
+const teamRouter = require("./routes/teamRouter")
 
-//const Countries = require("./models/countries");
 sequelize.sync({ alter: true })
   .then((result) => {
     console.log("Countries table created. ", result);
@@ -26,6 +26,7 @@ const variables = require("./config/variables"); //Bezieht die Umgebungsvariable
 const port = variables.port;
 
 app.use(countryRouter);
+app.use(teamRouter);
 
 app.listen(port, () => {
   console.log(`sportEventsServer app listening on port ${port}`);

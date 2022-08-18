@@ -1,4 +1,5 @@
 const Countries = require("../models/countries");
+const Teams = require("../models/teams");
 
 //index
 exports.index = ((res, req, next) => {
@@ -7,7 +8,7 @@ exports.index = ((res, req, next) => {
 
 //get all Countries
 exports.getAllCountries = ((req,res, next) => {
-    Countries.findAll({ where: req.query })
+    Countries.findAll({ where: req.query, include: Teams })
       .then(
         (countries) => {
           res.statusCode = 200;
@@ -21,6 +22,13 @@ exports.getAllCountries = ((req,res, next) => {
 
 //create a new Country 
 exports.createCountry = ((req, res, next) => {
+  if(!Object.keys(req.body).length) {
+    console.log("empty request", req.body);
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.send("Data is missing.");
+    return;
+  }
     Countries.create(req.body)
       .then(
         (country) => {
@@ -52,7 +60,7 @@ exports.deleteCountries = (req, res, next) => {
 
 //get one Country by Id
 exports.getCountryById = ((req, res, next) => {
-    Countries.findByPk(req.params.countryId)
+    Countries.findByPk(req.params.countryId, { include: Teams })
       .then((country) => {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");
