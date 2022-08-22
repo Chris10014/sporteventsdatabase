@@ -9,7 +9,9 @@ const path = require("path"); //Modul um Pfadangaben zu generieren
 const sequelize = require("./services/database");
 const express = require("express");
 const countryRouter = require("./routes/countryRouter");
-const teamRouter = require("./routes/teamRouter")
+const teamRouter = require("./routes/teamRouter");
+const userRouter = require("./routes/userRouter");
+const roleRouter = require("./routes/roleRouter");
 
 sequelize.sync({ alter: true })
   .then((result) => {
@@ -25,6 +27,8 @@ const variables = require("./config/variables"); //Bezieht die Umgebungsvariable
 
 const port = variables.port;
 
+app.use(userRouter);
+app.use(roleRouter);
 app.use(countryRouter);
 app.use(teamRouter);
 
