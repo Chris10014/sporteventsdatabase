@@ -8,7 +8,7 @@ exports.index = ((res, req, next) => {
 
 //get all Countries
 exports.getAllCountries = ((req,res, next) => {
-    Countries.findAll({ where: req.query, include: Teams })
+    Countries.findAll({ where: req.query })
       .then(
         (countries) => {
           res.statusCode = 200;
@@ -60,7 +60,7 @@ exports.deleteCountries = (req, res, next) => {
 
 //get one Country by Id
 exports.getCountryById = ((req, res, next) => {
-    Countries.findByPk(req.params.countryId, { include: Teams })
+    Countries.findByPk(req.params.countryId)
       .then((country) => {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");

@@ -30,7 +30,10 @@ const Teams = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
-        is: /^[a-zA-ZßäöüÄÖÜ()\-\/\s]+$/i,
+        is: {
+          args: /^[a-zA-ZßäöüÄÖÜ()\-\/\s]+$/i,
+          msg: "Nur Buchstaben und die Sonderzeichen ()-/ zulässig."
+        }
       },
     },
     country_id: {
