@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
+const Roles = require("./roles");
 
 const Users = sequelize.define(
   "users",
@@ -9,7 +10,7 @@ const Users = sequelize.define(
       allowNull: false,
     },
     last_name: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     nick_name: {
@@ -47,7 +48,7 @@ const Users = sequelize.define(
       },
     },
     country_id: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     email_verified: {
@@ -65,5 +66,17 @@ const Users = sequelize.define(
     updatedAt: "updated_at", // alias updatedAt as updated_at
   }
 );
+
+Users.belongsToMany(Roles, {
+  through: "users_have_roles",
+  foreignKey: "role_id",
+  otherKey: "user_id"
+});
+
+Roles.belongsToMany(Users, {
+  through: "users_have_roles",
+  foreignKey: "user_id",
+  otherKey: "role_id"
+});
 
 module.exports = Users;

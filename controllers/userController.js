@@ -1,4 +1,5 @@
 const Users = require("../models/users");
+const bcrypt = require("bcrypt");
 
 //index
 exports.index = ((res, req, next) => {
@@ -28,6 +29,13 @@ exports.createUser = ((req, res, next) => {
     res.send("Data is missing.");
     return;
   }
+  console.log("user: ", req.body);
+  // const salt = bcrypt.genSalt(10); // default 10
+  // const hashedPassword = bcrypt.hash(req.body.password, salt);
+  // console.log(salt);
+  // console.log (hashedPassword);
+  // req.body.password = hashedPassword;
+
     Users.create(req.body)
       .then(
         (user) => {

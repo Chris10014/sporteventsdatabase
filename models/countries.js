@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
 const Teams = require("./teams");
+const Users = require("./users");
 
 const Countries = sequelize.define(
   "countries",
@@ -9,7 +10,7 @@ const Countries = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     country_code: {
       type: Sequelize.STRING,
@@ -52,12 +53,17 @@ const Countries = sequelize.define(
 );
 
 Countries.hasMany(Teams, {
-  foreignKey: "country_id",
-  allowNull: false
+  foreignKey: "country_id"
 });
 Teams.belongsTo(Countries, {
-  foreignKey: "country_id",
-  allowNull: false
+  foreignKey: "country_id"
+});
+
+Countries.hasMany(Users, {
+  foreignKey: "country_id"
+});
+Users.belongsTo(Countries, {
+  foreignKey: "country_id"
 });
 
 module.exports = Countries;
