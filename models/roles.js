@@ -9,6 +9,10 @@ const Roles = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    description: { 
+      type: Sequelize.STRING,
+      allowNull: true
+    }
   },
   {
     timestamps: true,

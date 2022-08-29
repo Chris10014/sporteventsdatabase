@@ -1,4 +1,5 @@
 const Users = require("../models/users");
+const Roles = require("../models/roles");
 const bcrypt = require("bcrypt");
 
 //index
@@ -8,7 +9,7 @@ exports.index = ((res, req, next) => {
 
 //get all Users
 exports.getAllUsers = ((req,res, next) => {
-    Users.findAll({ where: req.query })
+    Users.findAll({ where: req.query, include: Roles })
       .then(
         (users) => {
           res.statusCode = 200;
@@ -21,7 +22,7 @@ exports.getAllUsers = ((req,res, next) => {
 });
 
 //create a new User 
-exports.createUser = ((req, res, next) => {
+exports.createUser = (async (req, res, next) => {
   if(!Object.keys(req.body).length) {
     console.log("empty request", req.body);
     res.statusCode = 200;
@@ -29,24 +30,37 @@ exports.createUser = ((req, res, next) => {
     res.send("Data is missing.");
     return;
   }
-  console.log("user: ", req.body);
-  // const salt = bcrypt.genSalt(10); // default 10
-  // const hashedPassword = bcrypt.hash(req.body.password, salt);
-  // console.log(salt);
-  // console.log (hashedPassword);
-  // req.body.password = hashedPassword;
-
+  Users.findOne({ where: {
+    email: req.body.email
+  }})
+  .then((user) => {
+    if(user) {
+       res.statusCode = 400;
+          res.setHeader("Content-Type", "application/json");
+          res.send("User with email " + req.body.email + " already exists.");
+    }
+  })
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    req.body.password = hashedPassword;
     Users.create(req.body)
       .then(
-        (user) => {
-          console.log("User created: ", user);
+        (user) => {          
+          Roles.findOne({ where: { name: "user"}}) //searches for role user
+          .then((role) => {
+            user.addRole(role) //adds user role as default to every new user
+          }).catch((err) => next(err));
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
           res.json(user);
-        },
+            },
         (err) => next(err)
-      )
-      .catch((err) => next(err));
+      ).catch((err) => next(err));
+
+  } catch (err) {
+      next(err);
+  }    
 });
 
 //update one User

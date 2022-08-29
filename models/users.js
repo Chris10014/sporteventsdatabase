@@ -20,6 +20,7 @@ const Users = sequelize.define(
     email: {
       type: Sequelize.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isEmail: {
           msg: "Richtige E-Mail Adresse angeben.",
@@ -69,14 +70,14 @@ const Users = sequelize.define(
 
 Users.belongsToMany(Roles, {
   through: "users_have_roles",
-  foreignKey: "role_id",
-  otherKey: "user_id"
+  foreignKey: "user_id", //repalces userId (source model)
+  otherKey: "role_id"
 });
 
 Roles.belongsToMany(Users, {
   through: "users_have_roles",
-  foreignKey: "user_id",
-  otherKey: "role_id"
+  foreignKey: "role_id", //replaces roleId (source model)
+  otherKey: "user_id"
 });
 
 module.exports = Users;
