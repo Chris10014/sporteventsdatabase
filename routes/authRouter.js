@@ -2,12 +2,14 @@
 
 const express = require("express");
 const authController = require("../controllers/authController");
+const userController = require("../controllers/userController");
+const userMiddleware = require("../middlewares/users.js");
 const authRouter = express.Router();
 authRouter.use(express.json());
 
 authRouter
-  .post("/api/v1/auth/register", authController.registerUser)
-  .post("/api/v1/auth/login", authController.loginUser)
-  .get("/api/v1/auth/logout", authController.logoutUser)
+  .post("/api/v1/register", userMiddleware.validateRegistrationData,  userController.createUser)
+  .post("/api/v1/login", authController.loginUser)
+  .get("/api/v1/logout", authController.logoutUser)
 
 module.exports = authRouter;

@@ -1,5 +1,6 @@
 const Users = require("../models/users");
 const Roles = require("../models/roles");
+
 const bcrypt = require("bcrypt");
 
 //index
@@ -23,49 +24,69 @@ exports.getAllUsers = ((req,res, next) => {
 
 //create a new User 
 exports.createUser = (async (req, res, next) => {
-  if(!Object.keys(req.body).length) {
-    console.log("empty request", req.body);
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.send("Data is missing.");
-    return;
-  }
-  Users.findOne({ where: {
-    email: req.body.email
-  }})
-  .then((user) => {
-    if(user) {
-       res.statusCode = 400;
-          res.setHeader("Content-Type", "application/json");
-          res.send("User with email " + req.body.email + " already exists.");
-    }
-  })
-  try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    req.body.password = hashedPassword;
-    Users.create(req.body)
-      .then(
-        (user) => {          
-          Roles.findOne({ where: { name: "user"}}) //searches for role user
-          .then((role) => {
-            user.addRole(role) //adds user role as default to every new user
-          }).catch((err) => next(err));
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(user);
-            },
-        (err) => next(err)
-      ).catch((err) => next(err));
-
-  } catch (err) {
+    // if(!Object.keys(req.body).length) {
+    //   console.log("empty request", req.body);
+    //   res.statusCode = 400;
+    //   res.setHeader("Content-Type", "application/json");
+    //   res.send("Data is missing.");
+    //   return;
+    // }
+    // //Check password length
+    // if(!req.body.password || req.body.password.length < 6 || req.body.password.length > 64) {
+    //   res.statusCode = 400;
+    //   res.setHeader("Content-Type", "application/json");
+    //   res.send("Password must have 6 to 64 characters.");
+    //   return;
+    // }
+    // //Check if both password are the same
+    // if(req.body.password_confirmation !== req.body.password) {
+    //   res.statusCode = 400;
+    //   res.setHeader("Content-Type", "application/json");
+    //   res.send("Passwords don't match.");
+    //   return;
+    // }
+    //Check if user already exists
+    Users.findOne({
+      where: {
+        email: req.body.email,
+      },
+    }).then((user) => {
+      if (user) {
+        res.statusCode = 400;
+        res.setHeader("Content-Type", "application/json");
+        res.send("User with email " + req.body.email + " already exists.");
+      }
+    });
+    //Generate hashed password
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      req.body.password = hashedPassword;
+      delete req.body.password_confirmation; //Field doesn't exist in model and db
+      Users.create(req.body)
+        .then(
+          (user) => {
+            Roles.findOne({ where: { name: "user" } }) //searches for role user
+              .then((role) => {
+                user.addRole(role); //adds user role as default to every new user
+              })
+              .catch((err) => next(err));
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.json(user);
+          },
+          (err) => next(err)
+        )
+        .catch((err) => next(err));
+    } catch (err) {
       next(err);
-  }    
-});
+    }
+  });
 
 //update one User
 exports.updateUser = ((req, res, next) => {
     res.statusCode = 403;
+    res.setHeader("Content-Type", "application/json");
     res.end("PUT operation not supported on /users");
 });
 
@@ -73,10 +94,14 @@ exports.updateUser = ((req, res, next) => {
 exports.deleteUsers = (req, res, next) => {
   if (Object.entries(req.query).length == 0) {
     res.statusCode = 403;
-    res.end("Delete is not supported on /users.");
+    res.setHeader("Content-Type", "application/json");
+    res.send("Delete is not supported on /users.");
+    return
   }
   res.statusCode = 403;
-  res.end("Delete is not supported on /users.");
+  res.setHeader("Content-Type", "application/json");
+  res.send("Delete is not supported on /users.");
+  return
 };
 
 //get one User by Id

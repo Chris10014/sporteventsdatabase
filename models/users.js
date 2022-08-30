@@ -8,28 +8,51 @@ const Users = sequelize.define(
     first_name: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [3, 30],
+          msg: "Vorname muss zwischen 3 und 30 Buchstaben haben.",
+        },
+      },
     },
     last_name: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [3, 30],
+          msg: "Nachname muss zwischen 3 und 30 Buchstaben haben.",
+        },
+      },
     },
     nick_name: {
       type: Sequelize.STRING,
       allowNull: true,
+      validate: {
+        len: {
+          args: [3, 30],
+          msg: "Nickname muss zwischen 3 und 30 Buchstaben haben.",
+        },
+      },
     },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true,
       validate: {
         isEmail: {
-          msg: "Richtige E-Mail Adresse angeben.",
+          msg: "Bitte eine richtige E-Mail Adresse angeben.",
         },
       },
     },
     password: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [6, 64],
+          msg: "Passwort muss aus 6 bis 64 Zeichen bestehen.",
+        },
+      },
     },
     gender: {
       type: Sequelize.STRING,
@@ -44,17 +67,17 @@ const Users = sequelize.define(
       validate: {
         is: {
           args: /^(19|20)\d{2}$/i, //Jahreszahl 1900 - 2099
-          msg: "Bitte eine valide Jahreszahl eingeben (JJJJ).",
+          msg: "Bitte eine richtige Jahreszahl eingeben (JJJJ).",
         },
       },
     },
     country_id: {
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: true,
     },
     email_verified: {
       type: Sequelize.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
     },
     activated: {
       type: Sequelize.BOOLEAN,
