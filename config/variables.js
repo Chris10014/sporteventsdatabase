@@ -15,4 +15,10 @@ require("dotenv").config() //importiert dotev
      password: process.env.DBPASSWORD,
      dialect: process.env.DIALECT,
    },
+   //Auth
+   authentication: {
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+    refresh_token_secret: process.env.REFRESH_TOKEN_SECRET
+   }   
+
  };

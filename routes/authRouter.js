@@ -3,7 +3,7 @@
 const express = require("express");
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
-const userMiddleware = require("../middlewares/users.js");
+const userMiddleware = require("../middlewares/dataInputValidation.js");
 const authRouter = express.Router();
 authRouter.use(express.json());
 

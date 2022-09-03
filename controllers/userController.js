@@ -132,6 +132,8 @@ exports.updateUserById = (req, res, next) => {
       res.send(`No User with Id ${userId} found.`);
       return;
     }
+    //set updated_at ...
+    req.body.updated_at = new Date();
     user
       .update(req.body)
       .then(

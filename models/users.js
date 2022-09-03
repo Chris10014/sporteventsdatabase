@@ -25,7 +25,7 @@ const Users = sequelize.define(
         },
       },
     },
-    nick_name: {
+    nickname: {
       type: Sequelize.STRING,
       allowNull: true,
       validate: {
@@ -83,11 +83,20 @@ const Users = sequelize.define(
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },
+    last_login: {
+      type: Sequelize.DATE,
+      defautValue: null,
+    },
+    //separate updated_at to update it independently from last_login
+    updated_at: {
+      type: Sequelize.DATE,
+      defaultValue: new Date(),
+    },
   },
   {
     timestamps: true,
     createdAt: "created_at", // alias createdAt as created_at
-    updatedAt: "updated_at", // alias updatedAt as updated_at
+    updatedAt: false, // separate updated_at to a normal field to update it independently from last_login
   }
 );
 
