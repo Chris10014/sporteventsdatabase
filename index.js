@@ -14,6 +14,7 @@ const teamRouter = require("./routes/teamRouter");
 const userRouter = require("./routes/userRouter");
 const roleRouter = require("./routes/roleRouter");
 const authRouter = require("./routes/authRouter");
+const sportRouter = require("./routes/sportRouter");
 
 sequelize.sync({ alter: true })
   .then((result) => {
@@ -34,6 +35,8 @@ app.use(userRouter);
 app.use(roleRouter);
 app.use(countryRouter);
 app.use(teamRouter);
+app.use(sportRouter);
+
 
 app.listen(port, () => {
   console.log(`sportEventsServer app listening on port ${port}`);

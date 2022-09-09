@@ -11,7 +11,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   return queryInterface.bulkInsert("Teams_and_hosts", [
+   return queryInterface.bulkInsert("Teams", [
      {
        team_name: "TSG Eppstein",
        postal_code: "65817",
@@ -62,6 +62,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete("Teams_and_hosts", null, {});
+    return queryInterface.bulkDelete("Teams", null, {});
   }
 };

@@ -39,7 +39,7 @@ exports.loginUser = ( async (req, res, next) => {
                 console.log("user: ", user + " id: " + req.body.id)
                  user.update({ last_login: new Date() });
               });
-              const accessToken = jwt.sign(user, variables.authentication.access_token_secret)
+              const accessToken = jwt.sign(user, variables.authentication.access_token_secret, {expiresIn: "1d"})
               res.statusCode = 200;
               res.setHeader("Content-Type", "application/json");
               res.json({ success: true, status: "logged in", accessToken: accessToken, error: null });
@@ -58,5 +58,6 @@ exports.loginUser = ( async (req, res, next) => {
 
 //logout a user
 exports.logoutUser = ((req, res, next) => {
-        res.send(200, "logout user");
+  // Still to define logout procedure
+  res.status(200).clearCookie("auth-token").json({ success: true, status: "cookie cleared", error: null });
 });

@@ -1,5 +1,6 @@
 const Users = require("../models/users");
 const Roles = require("../models/roles");
+const Teams = require("../models/teams");
 
 const bcrypt = require("bcrypt");
 
@@ -10,7 +11,7 @@ exports.index = ((res, req, next) => {
 
 //get all Users
 exports.getAllUsers = ((req,res, next) => {
-    Users.findAll({ where: req.query, include: Roles })
+    Users.findAll({ where: req.query, include: [Roles, Teams] })
       .then(
         (users) => {
           res.statusCode = 200;
@@ -134,6 +135,7 @@ exports.updateUserById = (req, res, next) => {
     }
     //set updated_at ...
     req.body.updated_at = new Date();
+    
     user
       .update(req.body)
       .then(

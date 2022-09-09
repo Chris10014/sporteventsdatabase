@@ -3,7 +3,7 @@ const sequelize = require("../services/database");
 const Countries = require("../models/countries");
 
 const Teams = sequelize.define(
-  "teams_and_hosts",
+  "teams",
   {
     team_name: {
       type: Sequelize.STRING,

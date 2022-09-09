@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
 const Roles = require("./roles");
+const Teams = require("./teams");
 
 const Users = sequelize.define(
   "users",
@@ -102,7 +103,7 @@ const Users = sequelize.define(
 
 Users.belongsToMany(Roles, {
   through: "users_have_roles",
-  foreignKey: "user_id", //repalces userId (source model)
+  foreignKey: "user_id", //replaces userId (source model)
   otherKey: "role_id"
 });
 
@@ -110,6 +111,18 @@ Roles.belongsToMany(Users, {
   through: "users_have_roles",
   foreignKey: "role_id", //replaces roleId (source model)
   otherKey: "user_id"
+});
+
+Users.belongsToMany(Teams, {
+  through: "users_have_teams",
+  foreignKey: "user_id", //repalces userId (source model)
+  otherKey: "team_id",
+});
+
+Teams.belongsToMany(Users, {
+  through: "users_have_teams",
+  foreignKey: "team_id", //replaces teamId (source model)
+  otherKey: "user_id",
 });
 
 module.exports = Users;
