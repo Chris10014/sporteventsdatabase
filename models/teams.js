@@ -16,8 +16,16 @@ const Teams = sequelize.define(
         is: {
           args: /^[a-zA-Z0-9ßäöüÄÖÜ&!():+\-\/\s]+$/i,
           msg: "Nur Buchstaben, Zahlen und Sonderzeichen !():+- zulässig."
-        }
+        },
+        isUnique(value) {
+         return Sports.findOne({ where: { team_name: value } }).then((team) => {
+            if (team) {
+                throw new Error("Team " + value + " already exists.");
+              }
+          });
+        },
       },
+      unique: true
     },
     postal_code: {
       type: Sequelize.INTEGER,

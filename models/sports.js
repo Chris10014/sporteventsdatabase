@@ -6,7 +6,17 @@ const Sports = sequelize.define(
   {
     code: {
       type: Sequelize.STRING,
+      validate: {
+        isUnique(value) {
+          return Sports.findOne({ where: { code: value } }).then((code) => {
+            if (code) {
+              throw new Error("Code " + value + " for sport already exists.");
+            }
+          });
+        },
+      },
       allowNull: false,
+      unique: true,
     },
     sport_de: {
       type: Sequelize.STRING,
@@ -18,7 +28,7 @@ const Sports = sequelize.define(
     },
     multisport: {
       type: Sequelize.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
     },
     verb_de: {
       type: Sequelize.STRING,

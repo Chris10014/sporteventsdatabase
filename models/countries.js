@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
 const Teams = require("./teams");
 const Users = require("./users");
+const SportEvents = require("./sportEvents");
 
 const Countries = sequelize.define(
   "countries",
@@ -64,6 +65,14 @@ Countries.hasMany(Users, {
 });
 Users.belongsTo(Countries, {
   foreignKey: "country_id"
+});
+
+// SportEvent is in a country
+Countries.hasMany(SportEvents, {
+  foreignKey: "country_id",
+});
+SportEvents.belongsTo(Countries, {
+  foreignKey: "country_id",
 });
 
 module.exports = Countries;

@@ -8,11 +8,21 @@ const Roles = sequelize.define(
     name: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        isUnique(value) {
+          return Sports.findOne({ where: { name: value } }).then((name) => {
+            if (name) {
+              throw new Error("Role with name " + value + " already exists.");
+            }
+          });
+        },
+      },
+      unique: true,
     },
-    description: { 
+    description: {
       type: Sequelize.STRING,
-      allowNull: true
-    }
+      allowNull: true,
+    },
   },
   {
     timestamps: true,
