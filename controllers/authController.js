@@ -20,11 +20,16 @@ exports.loginUser = ( async (req, res, next) => {
             email: req.body.email
         }
     }).then((user) => {
-        console.log("from /login user: ", user); 
         if (user == null) {
           res.statusCode = 401;
           res.setHeader("Content-Type", "application/json");
           res.json({ success: false, status: "login failed", accessToken: null, error: "Username and Password don't match."});
+          return;
+        }
+        if(!user.activated) {
+          res.statusCode = 401;
+          res.setHeader("Content-Type", "application/json");
+          res.json({ success: false, status: "not activated", accessToken: null, error: "Account is not activated." });
           return;
         }
         let userId = user.id; //males userId available for the next then() block

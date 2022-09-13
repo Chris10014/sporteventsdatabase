@@ -1,6 +1,7 @@
 const Users = require("../models/users");
 const Roles = require("../models/roles");
 const Teams = require("../models/teams");
+const Utils = require("./utils");
 
 const bcrypt = require("bcrypt");
 
@@ -11,7 +12,11 @@ exports.index = ((res, req, next) => {
 
 //get all Users
 exports.getAllUsers = ((req,res, next) => {
-    Users.findAll({ where: req.query, include: [Roles, Teams] })
+    Users.findAll({ where: req.query, attributes: { exclude: "password" },
+      include: [
+       { model: Roles, attributes: [ "name" ]},
+       { model: Teams, attributes: [ "team_name" ]}
+      ]})
       .then(
         (users) => {
           res.statusCode = 200;

@@ -11,12 +11,13 @@ exports.index = ((res, req, next) => {
 
 //get all SportEvents
 exports.getAllSportEvents = ((req,res, next) => {
-    SportEvents.findAll({ where: req.query, include: [
-      Countries, 
-      EventDates,
-      { model: Teams, as: "host"}, 
-      { model: Users, as: "owner"}
-    ] })
+    SportEvents.findAll({ where: req.query, 
+      include: [
+      { model: Countries, attributes: [ "country_code", "country_name_en", "country_name_de" ]},
+      { model: EventDates, attributes: [ "start", "end" ]},
+      { model: Teams, as: "host", attributes: [ "team_name" ]}, 
+      { model: Users, as: "owner", attributes: [ "first_name", "last_name" ]}
+      ]})
       .then(
         (sportEvents) => {
           res.statusCode = 200;

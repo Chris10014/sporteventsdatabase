@@ -4,6 +4,7 @@ const Countries = require("./countries");
 const Teams = require("./teams");
 const Users = require("./users");
 const EventDates = require("./eventDates");
+const Races = require("./races");
 
 const SportEvents = sequelize.define(
   "sportEvents",
@@ -89,6 +90,14 @@ SportEvents.hasMany(EventDates, {
   foreignKey: "sportEvent_id"
 });
 EventDates.belongsTo(SportEvents, {
+  foreignKey: "sportEvent_id"
+});
+
+//SportEvent has many races
+SportEvents.hasMany(Races, {
+  foreignKey: "sportEvent_id"
+});
+Races.belongsTo(SportEvents, {
   foreignKey: "sportEvent_id"
 });
 

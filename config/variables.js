@@ -19,6 +19,12 @@ require("dotenv").config() //importiert dotev
    authentication: {
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
     refresh_token_secret: process.env.REFRESH_TOKEN_SECRET
-   }   
-
+   },
+   //Mail
+   mailserver: {
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    user: process.env.MAIL_USER,
+    password: process.env.MAIL_PASSWORD
+   } 
  };

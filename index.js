@@ -17,6 +17,8 @@ const authRouter = require("./routes/authRouter");
 const sportRouter = require("./routes/sportRouter");
 const sportEventRouter = require("./routes/sportEventRouter");
 const eventDateRouter = require("./routes/eventDateRouter");
+const raceRouter = require("./routes/raceRouter");
+const courseRouter = require("./routes/courseRouter");
 
 sequelize.sync({ alter: true })
   .then((result) => {
@@ -40,6 +42,8 @@ app.use(teamRouter);
 app.use(sportRouter);
 app.use(sportEventRouter);
 app.use(eventDateRouter);
+app.use(raceRouter);
+app.use(courseRouter);
 
 
 app.listen(port, () => {

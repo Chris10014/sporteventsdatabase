@@ -44,7 +44,7 @@ const Users = sequelize.define(
           msg: "Bitte eine richtige E-Mail Adresse angeben.",
         },
         isUnique(value) {
-         return Sports.findOne({ where: { email: value } }).then((email) => {
+         return Users.findOne({ where: { email: value } }).then((email) => {
             if (email) {
                 throw new Error("E-mail " + value + " already exists.");
               }
