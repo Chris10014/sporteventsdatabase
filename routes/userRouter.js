@@ -2,22 +2,22 @@
 
 const express = require("express");
 const userController = require("../controllers/userController");
-const userMiddleware = require("../middlewares/auth");
+const authMiddleware = require("../middlewares/auth");
 const userRouter = express.Router();
 userRouter.use(express.json());
 
 userRouter
   .route("/api/v1/users", userController.index)
-  .get(userMiddleware.isLoggedIn, userController.getAllUsers)
+  .get(authMiddleware.isLoggedIn, userController.getAllUsers)
   .post(userController.createUser)
-  .put(userMiddleware.isLoggedIn, userController.updateUser)
-  .delete(userMiddleware.isLoggedIn, userController.deleteUsers);
+  .put(authMiddleware.isLoggedIn, userController.updateUser)
+  .delete(authMiddleware.isLoggedIn, userController.deleteUsers);
 
 userRouter
   .route("/api/v1/users/:userId")
-  .get(userMiddleware.isLoggedIn, userController.getUserById)
-  .post(userMiddleware.isLoggedIn, userController.createUserWithId)
-  .put(userMiddleware.isLoggedIn, userController.updateUserById)
-  .delete(userMiddleware.isLoggedIn, userController.deleteUserById);
+  .get(authMiddleware.isLoggedIn, userController.getUserById)
+  .post(authMiddleware.isLoggedIn, userController.createUserWithId)
+  .put(authMiddleware.isLoggedIn, userController.updateUserById)
+  .delete(authMiddleware.isLoggedIn, userController.deleteUserById);
 
 module.exports = userRouter;

@@ -17,9 +17,7 @@ exports.getAllEventDates = ((req,res, next) => {
     })
       .then(
         (eventDates) => {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(eventDates);
+          res.status(200).json(eventDates);
         },
         (err) => next(err)
       )
@@ -30,18 +28,14 @@ exports.getAllEventDates = ((req,res, next) => {
 exports.createEventDate = ((req, res, next) => {
   if(!Object.keys(req.body).length) {
     console.log("empty request", req.body);
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.send("Data is missing.");
+    res.status(400).json({success: false, status: "Empty object", error: "Data is missing."});
     return;
   }
     EventDates.create(req.body)
       .then(
         (eventDate) => {
           console.log("EventDate created: ", eventDate);
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(eventDate);
+          res.status(200).json(eventDate);
         },
         (err) => next(err)
       )
@@ -50,35 +44,29 @@ exports.createEventDate = ((req, res, next) => {
 
 //update one EventDate
 exports.updateEventDate = ((req, res, next) => {
-    res.statusCode = 403;
-    res.end("PUT operation not supported on /eventDates");
+    res.status(400).json({ success: false, status: "Unsupported action", message: "PUT operation not supported on /eventDates" });
 });
 
 //delete EventDates
 exports.deleteEventDates = (req, res, next) => {
   if (Object.entries(req.query).length == 0) {
-    res.statusCode = 403;
-    res.end("Delete is not supported on /eventDates.");
+    res.status(400).json({ success: false, status: "Unsupported action", message: "Delete is not supported on /eventDates." });
   }
-  res.statusCode = 403;
-  res.end("Delete is not supported on /eventDates.");
+  res.status(400).json({ success: false, status: "Unsupported action", message: "Delete is not supported on /eventDates." });
 };
 
 //get one EventDate by Id
 exports.getEventDateById = ((req, res, next) => {
     EventDates.findByPk(req.params.eventDateId)
       .then((eventDate) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.json(eventDate);
+        res.status(200).json(eventDate);
       })
       .catch((err) => next(err));
 });
 
 //create a eventDate with an Id
 exports.createEventDateWithId = (req, res, next) => {
-  res.statusCode = 403;
-  res.end("PUT operation not supported on /eventDates/:eventDateId");
+  res.status(400).json({ success: false, status: "Unsupported action", message: "PUT operation not supported on /eventDates/:eventDateId" });
 };
 
 //update one eventDate by Id 
@@ -87,18 +75,14 @@ exports.updateEventDateById = (req, res, next) => {
 
   EventDates.findByPk(eventDateId).then((eventDate) => {
     if (!eventDate) {
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "application/json");
-      res.send(`No EventDate with Id ${eventDateId} found.`);
+      res.status(200).json({ message: `No EventDate with Id ${eventDateId} found.` });
       return;
     }
     eventDate
       .update(req.body)
       .then(
         (eventDate) => {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(eventDate);
+          res.status(200).json(eventDate);
         },
         (err) => next(err)
       )
@@ -112,15 +96,10 @@ exports.deleteEventDateById = (req, res, next) => {
 
   EventDates.findByPk(eventDateId).then((eventDate) => {
     if (!eventDate) {
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "application/json");
-      res.send(`No EventDate with Id ${eventDateId} found.`);
+      res.status(200).json({ success: true, message: `No EventDate with Id ${eventDateId} found.` });
       return;
     }
     eventDate.destroy();
-    console.log(`EventDate with id ${eventDateId} deleted.`);
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.send(`EventDate with Id ${eventDateId} deleted.`);
+    res.status(200).json({ success: true, message: `EventDate with Id ${eventDateId} deleted.` });
   });
 };

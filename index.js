@@ -19,6 +19,8 @@ const sportEventRouter = require("./routes/sportEventRouter");
 const eventDateRouter = require("./routes/eventDateRouter");
 const raceRouter = require("./routes/raceRouter");
 const courseRouter = require("./routes/courseRouter");
+const sendMailRouter = require("./routes/sendMailRouter");
+const authMiddleware = require("./middlewares/auth");
 
 sequelize.sync({ alter: true })
   .then((result) => {
@@ -31,10 +33,14 @@ sequelize.sync({ alter: true })
 const app = express();
 
 const variables = require("./config/variables"); //Bezieht die Umgebungsvariablen aus variables Objekt
+const { sendConfirmationMail } = require("./controllers/sendMailController");
 
 const port = variables.port;
 
 app.use(authRouter);
+
+app.use(authMiddleware.isLoggedIn);
+
 app.use(userRouter);
 app.use(roleRouter);
 app.use(countryRouter);
@@ -44,6 +50,7 @@ app.use(sportEventRouter);
 app.use(eventDateRouter);
 app.use(raceRouter);
 app.use(courseRouter);
+app.use(sendMailRouter);
 
 
 app.listen(port, () => {
