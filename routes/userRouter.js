@@ -17,7 +17,7 @@ userRouter
   .route("/api/v1/users/:userId")
   .get(authMiddleware.isLoggedIn, userController.getUserById)
   .post(authMiddleware.isLoggedIn, userController.createUserWithId)
-  .put(authMiddleware.isLoggedIn, userController.updateUserById)
+  .put(userController.updateUserById)
   .delete(authMiddleware.isLoggedIn, userController.deleteUserById);
 
 module.exports = userRouter;

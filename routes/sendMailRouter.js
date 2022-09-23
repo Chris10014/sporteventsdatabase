@@ -7,6 +7,6 @@ const sendMailRouter = express.Router();
 sendMailRouter.use(express.json());
 
 sendMailRouter
-  .post("/api/v1/sendMail",  sendMailController.sendConfirmationMail)
+  .post("/api/v1/sendActivationMail",  sendMailController.sendActivationMail)
 
 module.exports = sendMailRouter;

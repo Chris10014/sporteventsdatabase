@@ -22,13 +22,13 @@ const courseRouter = require("./routes/courseRouter");
 const sendMailRouter = require("./routes/sendMailRouter");
 const authMiddleware = require("./middlewares/auth");
 
-sequelize.sync({ alter: true })
-  .then((result) => {
-    console.log("Countries table created. ", result);
-  })
-  .catch((err) => {
-    console.log("Error creating countries table: ", err);
-  });
+// sequelize.sync({ alter: true })
+//   .then((result) => {
+//     console.log("Countries table created. ", result);
+//   })
+//   .catch((err) => {
+//     console.log("Error creating countries table: ", err);
+//   });
 
 const app = express();
 
@@ -38,10 +38,10 @@ const { sendConfirmationMail } = require("./controllers/sendMailController");
 const port = variables.port;
 
 app.use(authRouter);
+app.use(userRouter);
 
 app.use(authMiddleware.isLoggedIn);
 
-app.use(userRouter);
 app.use(roleRouter);
 app.use(countryRouter);
 app.use(teamRouter);

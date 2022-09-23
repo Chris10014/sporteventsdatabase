@@ -1,9 +1,8 @@
 const Users = require("../models/users");
 const Roles = require("../models/roles");
 const Teams = require("../models/teams");
-const Utils = require("./utils");
-
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 //index
 exports.index = ((res, req, next) => {
@@ -69,6 +68,9 @@ exports.createUser = (async (req, res, next) => {
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
       req.body.password = hashedPassword;
       delete req.body.password_confirmation; //Field doesn't exist in model and db
+      //Create activation token
+      const activationToken = crypto.randomBytes(32).toString("hex") + ";" + new Date();
+      req.body.activation_token = activationToken;
       Users.create(req.body)
         .then(
           (user) => {

@@ -92,6 +92,10 @@ const Users = sequelize.define(
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },
+    activation_token: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
     last_login: {
       type: Sequelize.DATE,
       defautValue: null,
@@ -99,7 +103,7 @@ const Users = sequelize.define(
     //separate updated_at to update it independently from last_login
     updated_at: {
       type: Sequelize.DATE,
-      defaultValue: new Date(),
+      defaultValue: null,
     },
   },
   {

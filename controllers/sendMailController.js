@@ -8,7 +8,7 @@ exports.index = (req, res, next) => {
 };
 
 //send an confirmation mail
-exports.sendConfirmationMail = (req, res, next) => {
+exports.sendActivationMail = (req, res, next) => {
   const { to, subject, text, html } = req.body;
   const mailData = {
     from: "chrisoph@test.de",
