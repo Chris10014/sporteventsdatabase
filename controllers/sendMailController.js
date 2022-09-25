@@ -11,7 +11,7 @@ exports.index = (req, res, next) => {
 exports.sendActivationMail = (req, res, next) => {
   const { to, subject, text, html } = req.body;
   const mailData = {
-    from: "chrisoph@test.de",
+    from: "activation@bigpoints.de",
     to: to,
     subject: subject,
     text: text,

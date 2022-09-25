@@ -30,4 +30,9 @@ require("dotenv").config() //importiert dotev
      user: process.env.MAIL_USER,
      password: process.env.MAIL_PASSWORD,
    },
+   activationMail: {
+     subject: process.env.ACTIVATION_SUBJECT,
+     text: process.env.ACTIVATION_TEXT,
+     html: process.env.ACTIVATION_HML,
+   },
  };

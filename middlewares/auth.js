@@ -9,7 +9,8 @@ module.exports = {
 
         jwt.verify(accessToken, variables.authentication.access_token_secret, (err, user) => {
             if(err) return res.status(403).json({success: false, status: "Invalid accessToken", error: err});
-            req.user = user
+            req.user = user //binds the logged in userId and email to req.user object
+            console.log("from auth middleware, user: ", user);
             next();
         })
 }

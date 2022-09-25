@@ -3,9 +3,8 @@ const Roles = require("../models/roles");
 const bcrypt= require("bcrypt");
 const jwt = require("jsonwebtoken");
 const variables = require("../config/variables");
-const crypto = require("crypto"); //used to create activationToken
-const sendMailController = require("../controllers/sendMailController");
 const mailer = require("../services/mailer");
+const utils = require("./utils");
 
 //index
 exports.index = ((req, res, next) => {
@@ -30,8 +29,9 @@ exports.registerUser = (async (req, res, next) => {
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
       req.body.password = hashedPassword;
       delete req.body.password_confirmation; //Field doesn't exist in model and db
-      //Create activation token
-      const activationToken = crypto.randomBytes(32).toString("hex") + ";" + (Math.round(new Date().getTime()/1000) + variables.activation_link_expiring_time); //Math.round(timestamp/1000) for full seconds
+      //get an activation token
+      const activationToken = utils.createActivationToken();
+      const tokenExpiresAt = new Date(activationToken.split(".")[1]*1000).toLocaleString("de-DE");
       req.body.activation_token = activationToken;
       Users.create(req.body)
         .then(
@@ -42,28 +42,17 @@ exports.registerUser = (async (req, res, next) => {
               })
               .catch((err) => next(err));
               //send activation link
-              const activationLink = variables.base_url + ":" + variables.port + "/api/v1/activate/" + user.id + "/" + activationToken;
-              const to = user.email;
-              const subject = "Konto aktivieren";
-              const text = `Um dein Konto bei BigPoints zu aktivieren, klicke diesen Link: ${activationLink} \nDer Link ist ${variables.activation_link_expiring_time / 60} Minuten gültig.`;
-              const html = `<p>Um dein Konto bei <b>BigPoints</b> zu aktivieren, klicke hier <a href="${activationLink}">BigPoints-Konto aktivieren</a>.</p><p>Der Link ist ${variables.activation_link_expiring_time / 60} Minuten gültig.</p>`;
-
-               const mailData = {
-                 from: "bigpoints@test.de",
-                 to: to,
-                 subject: subject,
-                 text: text,
-                 html: html,
-               };
-
-              mailer.transport.sendMail(mailData, (err, info) => {
-                if (err) {
-                  res.status(401).json({ success: false, status: "Mail not send", messageId: null, error: err, user: user });
+              const info = mailer
+                .sendActivationLink(user.email, user.id, activationToken, user.first_name)
+                .then((info) => {
+                  if (!info) {
+                    res.status(401).json({ success: false, status: "Mail not send", messageId: null, error: "Invalid mailer configuration or network failure." });
+                    return;
+                  }
+                  res.status(200).json({ success: true, status: "Mail send", messageId: info.messageId, error: null });
                   return;
-                }
-                res.status(200).json({ success: true, status: "Mail send", messageId: info.messageId, error: null, user: user });
-                return;
-              });
+                })
+                .catch((err) => next(err));
           },
           (err) => next(err)
         )
@@ -129,8 +118,8 @@ exports.logoutUser = ((req, res, next) => {
 
 //activate an user account
 exports.activateAccount = ((req, res, next) => {
-  const activationToken = req.params.activationToken.split(";")[0];
-  const tokenCreatedAt = req.params.activationToken.split(";")[1];
+  const activationToken = req.params.activationToken.split(".")[0];
+  const tokenExpiresAt = req.params.activationToken.split(".")[1];
   const userId = req.params.userId;
   if(!req.params.activationToken || !req.params.userId) {
     res.status(400).json({ success: false, status: "data missing", error: `No activation token or userId.` });
@@ -148,11 +137,11 @@ exports.activateAccount = ((req, res, next) => {
       res.status(400).json({ success: false, status: "already activated", error: `User with id ${userId} is already activated.` });
       return;
     }
-    if (activationToken !== user.activation_token.split(";")[0]) {
+    if (activationToken !== user.activation_token.split(".")[0]) {
       res.status(400).json({ success: false, status: "invalid token", error: `Invalid actiation token.` });
       return;
     }
-    if (tokenCreatedAt < Math.round(new Date().getTime() / 1000)) {
+    if (tokenExpiresAt < new Date().getTime()/1000) {
       res.status(400).json({ success: false, status: "expired token", error: `Activation token expired.`, resendActivationLink: `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}` });
       return;
     }
@@ -191,36 +180,21 @@ exports.resendActivationLink = ((req, res, next) => {
       return;
     }
     //send activation link
-    const activationToken = crypto.randomBytes(32).toString("hex") + ";" + (Math.round(new Date().getTime() / 1000) + variables.activation_link_expiring_time);
-    const activationLink = variables.base_url + ":" + variables.port + "/api/v1/activate/" + user.id + "/" + activationToken;
-    
-    const to = email;
-    const subject = "Konto aktivieren";
-    const text = `Um dein Konto bei BigPoints zu aktivieren, klicke diesen Link: ${activationLink} \nDer Link ist ${variables.activation_link_expiring_time / 60} Minuten gültig.`;
-    const html = `<p>Um dein Konto bei <b>BigPoints</b> zu aktivieren, klicke hier <a href="${activationLink}">BigPoints-Konto aktivieren</a>.</p><p>Der Link ist ${variables.activation_link_expiring_time / 60} Minuten gültig.</p>`;
-
-    const mailData = {
-      from: "bigpoints@test.de",
-      to: to,
-      subject: subject,
-      text: text,
-      html: html,
-    };
-
-    user
-      .update({
+    const activationToken = utils.createActivationToken();
+    user.update({
         activation_token: activationToken,
-        updated_at: new Date(),
+        updated_at: new Date()
       })
       .then(() => {
-         mailer.transport.sendMail(mailData, (err, info) => {
-           if (err) {
-             res.status(401).json({ success: false, status: "Mail not send", messageId: null, error: err });
+         mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name)
+        .then((info) => {
+          if (!info) {
+            res.status(401).json({ success: false, status: "Mail not send", messageId: null, error: "Invalid mailer configuration or network failure." });
+            return;
+          }
+          res.status(200).json({ success: true, status: "Mail send", messageId: info.messageId, error: null });
              return;
-           }
-           res.status(200).json({ success: true, status: "Mail send", messageId: info.messageId, error: null });
-           return;
-         });
+        }).catch((err) => next(err));
       }).catch((err) => next(err));   
   }).catch((err) => next(err))
 });
