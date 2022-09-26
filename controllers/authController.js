@@ -43,16 +43,14 @@ exports.registerUser = (async (req, res, next) => {
               .catch((err) => next(err));
               //send activation link
               const info = mailer
-                .sendActivationLink(user.email, user.id, activationToken, user.first_name)
-                .then((info) => {
-                  if (!info) {
-                    res.status(401).json({ success: false, status: "Mail not send", messageId: null, error: "Invalid mailer configuration or network failure." });
-                    return;
+                .sendActivationLink(user.email, user.id, activationToken, user.first_name, ({ err, info }) => {
+                  if(err) {
+                     res.status(401).json({ success: false, status: "Activation link not send", messageId: null, error: err, resendActivationLink: `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`, user: user });
+                     return;
                   }
-                  res.status(200).json({ success: true, status: "Mail send", messageId: info.messageId, error: null });
+                  res.status(200).json({ success: true, status: "Activation link send", messageId: info.messageId, error: null, user: user });
                   return;
-                })
-                .catch((err) => next(err));
+                });
           },
           (err) => next(err)
         )
@@ -94,14 +92,10 @@ exports.loginUser = ( async (req, res, next) => {
                  user.update({ last_login: new Date() });
               });
               const accessToken = jwt.sign(user, variables.authentication.access_token_secret, {expiresIn: "1d"})
-              res.statusCode = 200;
-              res.setHeader("Content-Type", "application/json");
-              res.json({ success: true, status: "logged in", accessToken: accessToken, error: null });
+              res.status(200).json({ success: true, status: "logged in", accessToken: accessToken, error: null });
               return;
             } else {             
-              res.statusCode = 401;
-              res.setHeader("Content-Type", "application/json");
-              res.json({ success: false, status: "login failed", accessToken: null, error: "Username and Password don't match." });
+              res.status(401).json({ success: false, status: "login failed", accessToken: null, error: "Username and Password don't match." });
               return;
             }
     }).catch((err) => next(err))
@@ -186,15 +180,14 @@ exports.resendActivationLink = ((req, res, next) => {
         updated_at: new Date()
       })
       .then(() => {
-         mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name)
-        .then((info) => {
-          if (!info) {
-            res.status(401).json({ success: false, status: "Mail not send", messageId: null, error: "Invalid mailer configuration or network failure." });
-            return;
+         mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name, ({ err, info }) => {
+          if (err) {
+            res.status(401).json({ success: false, status: "Activation link not send", messageId: null, error: err, resendActivationLink: `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}` });
+              return;
           }
-          res.status(200).json({ success: true, status: "Mail send", messageId: info.messageId, error: null });
-             return;
-        }).catch((err) => next(err));
+          res.status(200).json({ success: true, status: "Activation link send", messageId: info.messageId, error: null });
+          return;
+         })
       }).catch((err) => next(err));   
   }).catch((err) => next(err))
 });

@@ -10,7 +10,7 @@ const transport = nodemailer.createTransport({
   },
 });
 
-exports.sendActivationLink = (async (email, userId, activationToken, firstName) => {
+exports.sendActivationLink = (async (email, userId, activationToken, firstName, callback) => {
     // const activationLink = `${process.env.BASE_URL}api/verify/${userID}/${token}`;
     const tokenExpiresAt = new Date(activationToken.split(".")[1] * 1000).toLocaleString("de-DE"); //new Date(timestamp must be in milliseconds)
     const activationLink = `${variables.base_url}:${variables.port}/api/v1/activate/${userId}/${activationToken}`;
@@ -25,10 +25,9 @@ exports.sendActivationLink = (async (email, userId, activationToken, firstName) 
     <p>Falls du dich nicht für BigPoints registriert hast, kannst du diese E-Mail ignorieren.</p>`
 };
 
-    return await transport.sendMail(mailData);
-  
+    return await transport.sendMail(mailData, (err, info) => {
 
-
-      
+      return callback({ err, info});
+    });     
     
   });
