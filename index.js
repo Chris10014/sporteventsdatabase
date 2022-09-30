@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * to automatically format code: CTR + K + F or CTR + K + D
+ */
 
 const http = require("http");
 const path = require("path"); //Modul um Pfadangaben zu generieren

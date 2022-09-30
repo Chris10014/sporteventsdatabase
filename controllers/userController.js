@@ -29,27 +29,6 @@ exports.getAllUsers = ((req,res, next) => {
 
 //create a new User 
 exports.createUser = (async (req, res, next) => {
-    // if(!Object.keys(req.body).length) {
-    //   console.log("empty request", req.body);
-    //   res.statusCode = 400;
-    //   res.setHeader("Content-Type", "application/json");
-    //   res.send("Data is missing.");
-    //   return;
-    // }
-    // //Check password length
-    // if(!req.body.password || req.body.password.length < 6 || req.body.password.length > 64) {
-    //   res.statusCode = 400;
-    //   res.setHeader("Content-Type", "application/json");
-    //   res.send("Password must have 6 to 64 characters.");
-    //   return;
-    // }
-    // //Check if both password are the same
-    // if(req.body.password_confirmation !== req.body.password) {
-    //   res.statusCode = 400;
-    //   res.setHeader("Content-Type", "application/json");
-    //   res.send("Passwords don't match.");
-    //   return;
-    // }
     //Check if user already exists
     Users.findOne({
       where: {
@@ -93,44 +72,56 @@ exports.createUser = (async (req, res, next) => {
 
 //update one User
 exports.updateUser = ((req, res, next) => {
-    res.statusCode = 403;
-    res.setHeader("Content-Type", "application/json");
-    res.end("PUT operation not supported on /users");
+    res.status(403).json({ success: false, status: "Unsupported operation", error: "PUT operation is not supported on /users" });
+    return;
 });
 
 //delete Users
 exports.deleteUsers = (req, res, next) => {
   if (Object.entries(req.query).length == 0) {
-    res.statusCode = 403;
-    res.setHeader("Content-Type", "application/json");
-    res.send("Delete is not supported on /users.");
-    return
+    res.status(403).json({ success: false, status: "Unsupported operation", error: "DELETE operation is not supported on /users" });
+    return;
   }
-  res.statusCode = 403;
-  res.setHeader("Content-Type", "application/json");
-  res.send("Delete is not supported on /users.");
-  return
+  res.status(403).json({ success: false, status: "Unsupported operation", error: "DELETE operation is not supported on /users" });
+  return;
 };
 
 //get one User by Id
 exports.getUserById = ((req, res, next) => {
-    Users.findByPk(req.params.userId)
+  if (!req.params.userId) {
+     res.status(400).json({ success: false, status: "Data missing", error: `No userId present.` });
+     return;
+  }
+    Users.findByPk((req.params.userId), {
+  include: [{ model: Roles, attributes: [ "name" ]}],
+  attributes: {
+     exclude: ['password']
+  }
+})
       .then((user) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.json(user);
+        res.status(200).json(user);
+        return;
       })
       .catch((err) => next(err));
 });
 
 //create a user with an Id
 exports.createUserWithId = (req, res, next) => {
-  res.statusCode = 403;
-  res.end("PUT operation not supported on /users/:userId");
+  res.status(403).json({ success: false, status: "Unsupported operation", error: "PUT operation is not supported on /users" });
+  return;
 };
 
 //update one user by Id 
 exports.updateUserById = (req, res, next) => {
+   if (!req.params.userId) {
+     res.status(400).json({ success: false, status: "Data missing", error: `No userId present.` });
+     return;
+   }
+   if (req.user.id * 1 !== req.params.userId * 1) {
+     res.status(400).json({ success: false, status: "Invalid userId", error: `Not allowed to update user with id ${req.params.userId}.` });
+     return;
+   }
+
   let userId = req.params.userId;
 
   Users.findByPk(userId).then((user) => {
@@ -159,19 +150,20 @@ exports.updateUserById = (req, res, next) => {
 
 //delete a user by Id
 exports.deleteUserById = (req, res, next) => {
+   if (!req.params.userId) {
+     res.status(400).json({ success: false, status: "Data missing", error: `No userId present.` });
+     return;
+   }
+
   let userId = req.params.userId;
 
   Users.findByPk(userId).then((user) => {
     if (!user) {
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "application/json");
-      res.send(`No User with Id ${userId} found.`);
+      res.status(200).json({ success: false, status: "Unknown user", error: `No User with Id ${userId} found.` });
       return;
     }
     user.destroy();
-    console.log(`User with id ${userId} deleted.`);
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.send(`User with Id ${userId} deleted.`);
+    res.status(200).json({ success: true, status: "User deleted", error: null, message: `User with Id ${userId} deleted.` });
+    return;
   });
 };
