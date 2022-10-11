@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
-const Users = require("./users");
 
 const Roles = sequelize.define(
   "roles",
@@ -10,7 +9,7 @@ const Roles = sequelize.define(
       allowNull: false,
       validate: {
         isUnique(value) {
-          return Sports.findOne({ where: { name: value } }).then((name) => {
+          return Roles.findOne({ where: { name: value } }).then((name) => {
             if (name) {
               throw new Error("Role with name " + value + " already exists.");
             }

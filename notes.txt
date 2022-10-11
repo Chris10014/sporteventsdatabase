@@ -1,0 +1,19 @@
+HTTP error codes
+• 400 Bad Requests: This denotes that the client-side input has failed documentation/validation.
+• 401 Unauthorized: This denotes that the user is unauthorized for accessing a resource. Usually, it returns when a user is not verified.
+• 403 Forbidden: This denotes that the user is inappropriate and is not allowed to access a resource even after being verified.
+• 404 Not Found: This denotes that no resources are found.
+• 405 Method Not Allowed: This indicates that the server knows the request method, but the target resource doesn't support this method.
+• 409 Conflict:This indicates a request conflict with the current state of the target resource.
+• 500 Internal server error: This is a common server error.
+• 502 Bad Gateway: This error marks an invalid/null response from an upstream server.
+• 503 Service Unavailable: This denotes that something unpredicted and unusual activity took place on the server-side. (server overload, part failure, system failure)
+
+Response bodies
+{
+    "success": true || false //indicates whether an operation run as expected true or not false
+    "title": "A brief humen-readable message"
+    "detail": "A human-readable explanation"
+    "instance": a URI that identifies the specific occurrence of an error
+    "additional optional information like password renew link"
+}

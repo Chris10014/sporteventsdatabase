@@ -20,7 +20,7 @@ exports.registerUser = async (req, res, next) => {
     },
   }).then((user) => {
     if (user) {
-      res.status(400).json({ success: false, status: "Double entry", error: `User with email ${req.body.email} already exists.` });
+      res.status(409).json({ success: false, title: "Dublicate", details: `User with email ${req.body.email} already exists.`, instance: `${req.get("host")}${req.originalUrl}` });
     }
   });
   //Generate hashed password
