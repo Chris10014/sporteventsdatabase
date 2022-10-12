@@ -8,7 +8,7 @@ userRouter.use(express.json());
 
 userRouter
   .route("/api/v1/users", userController.index) //Only for admin
-  .get(authMiddleware.isLoggedIn, authMiddleware.hasRole("user"), userController.getAllUsers) 
+  .get(authMiddleware.isLoggedIn, authMiddleware.hasRole("writer"), userController.getAllUsers) 
   .post(userController.createUser)
   .put(authMiddleware.isLoggedIn, userController.updateUser)
   .delete(authMiddleware.isLoggedIn, userController.deleteUsers);

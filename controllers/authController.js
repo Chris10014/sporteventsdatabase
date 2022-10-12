@@ -20,7 +20,12 @@ exports.registerUser = async (req, res, next) => {
     },
   }).then((user) => {
     if (user) {
-      res.status(409).json({ success: false, title: "Dublicate", details: `User with email ${req.body.email} already exists.`, instance: `${req.get("host")}${req.originalUrl}` });
+      error = new Error("A user with email " + req.body.email + " already exists.");
+      error.status = 409;
+      error.title = "Duplicate email";
+      error.instance = `${req.originalUrl}`;
+      return next(error);
+      // res.status(409).json({ success: false, title: "Dublicate", details: `User with email ${req.body.email} already exists.`, instance: `${req.get("host")}${req.originalUrl}` });
     }
   });
   //Generate hashed password
@@ -47,7 +52,7 @@ exports.registerUser = async (req, res, next) => {
               res.status(401).json({ success: false, status: "Activation link not send", messageId: null, error: err, resendActivationLinkUrl: `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`, user: user });
               return;
             }
-            res.status(200).json({ success: true, status: "Activation link send", messageId: info.messageId, error: null, user: user });
+            res.status(200).json(user);
             return;
           });
         },
@@ -75,9 +80,9 @@ exports.loginUser = async (req, res, next) => {
         return;
       }
       if (!user.activated) {
-        res.statusCode = 401;
+        res.statusCode = 403;
         res.setHeader("Content-Type", "application/json");
-        res.json({ success: false, status: "Not activated", accessToken: null, error: "Account is not activated.", resendActivationLinkUrl: `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}` });
+        res.json({ success: false, status: "Not activated", accessToken: null, details: "You must activate your account. Look into your email box for the email with the activation link. Or request a new activation link.", resendActivationLinkUrl: `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}` });
         return;
       }
       let userId = user.id; //makes userId available for the next then() block

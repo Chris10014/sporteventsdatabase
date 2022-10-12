@@ -11,6 +11,7 @@ const path = require("path"); //Modul um Pfadangaben zu generieren
  */ 
 const sequelize = require("./services/database");
 const express = require("express");
+const logger = require("morgan");
 
 const countryRouter = require("./routes/countryRouter");
 const teamRouter = require("./routes/teamRouter");
@@ -40,6 +41,8 @@ const { sendConfirmationMail } = require("./controllers/sendMailController");
 
 const port = variables.port;
 
+app.use(logger("dev")); //Logs all requests to console
+
 app.use(authRouter);
 app.use(userRouter);
 
@@ -55,7 +58,24 @@ app.use(raceRouter);
 app.use(courseRouter);
 app.use(sendMailRouter);
 
-
 app.listen(port, () => {
   console.log(`sportEventsServer app listening on port ${port}`);
+});
+
+// catch 404 and forward to error handler
+app.use((req, res, next)  => {
+  const error = new Error("Resource not found. Please check your request url.")
+  error.status(404);
+  error.title = "Not found";
+  next(error);
+});
+
+app.use((error, req, res , next) => {
+
+  res.status(error.status || 500);
+  error.details = error.message || "Something went wrong";
+  error.title = error.title || "Error";
+  res.json({error: error })
+   console.log("\nFrom error handler: ", error + "\n");
+   return;
 });

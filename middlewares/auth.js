@@ -7,7 +7,15 @@ module.exports = {
   isLoggedIn: (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const accessToken = authHeader && authHeader.split(" ")[1]; //Equal to if(authHeader) { ... }
-    if (accessToken == null) return res.status(401).json({ success: false, status: "No accessToken", error: "AccessToken not present." });
+    if (accessToken == null) {
+      const error = new Error("The access token isn't present in your request.");
+      error.status = 401;
+      error.title = "Access token missing";
+      error.instance = `${req.originalUrl}`;
+      return next(error);
+    }
+    
+    // return res.status(401).json({ success: false, status: "No accessToken", error: "AccessToken not present." });
 
     jwt.verify(accessToken, variables.authentication.access_token_secret, (err, user) => {
       if (err) return res.status(403).json({ success: false, status: "Invalid accessToken", error: err });
@@ -30,7 +38,11 @@ module.exports = {
         .then((user) => {
           const role = user.roles.filter((role) => role.name === roleName)[0];
           if (!role) {
-            return res.status(401).json({ success: false, status: "Unauthorized user", message: "You are not authorized for this operation.", error: null });
+            const error = new Error("You are not authorized to perform this operation. Ask your admin to grant you the appropriate role.");
+            error.status = 401;
+            error.title = "Unauthorized";
+            error.instance = `${req.originalUrl}`;
+            return next(error);
           }
           next();
           return;

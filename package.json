@@ -8,7 +8,7 @@
     "migrate": "npx sequelize-cli db:migrate",
     "migrate-undo": "npx sequelize-cli db:migrate:undo",
     "seed-all": "npx sequelize-cli db:seed:all",
-    "seed-one-file":"npx sequelize db:seed --seed <seeder-file.js>", 
+    "seed-one-file": "npx sequelize db:seed --seed <seeder-file.js>",
     "create-seed": "npx sequelize-cli seed:generate --name <table-seeder>",
     "start": "nodemon index"
   },
@@ -19,6 +19,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.8",
     "sequelize": "^6.21.3"
@@ -28,5 +29,3 @@
     "sequelize-cli": "^6.4.1"
   }
 }
-
-

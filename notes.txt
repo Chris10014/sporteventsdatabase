@@ -13,7 +13,7 @@ Response bodies
 {
     "success": true || false //indicates whether an operation run as expected true or not false
     "title": "A brief humen-readable message"
-    "detail": "A human-readable explanation"
+    "details": "A human-readable explanation"
     "instance": a URI that identifies the specific occurrence of an error
-    "additional optional information like password renew link"
+    "optional":  optional information like password renewal link
 }

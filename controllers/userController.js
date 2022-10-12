@@ -34,7 +34,12 @@ exports.createUser = (async (req, res, next) => {
       },
     }).then((user) => {
       if (user) {
-        res.status(409).json({ success: false, title: "Duplicate e-mail", details: "A user with email " + req.body.email + " already exists.", instance: `${req.originalUrl}` });
+        error = new Error("A user with email " + req.body.email + " already exists.");
+        error.status = 409;
+        error.title = "Duplicate email";
+        error.instance = `${req.originalUrl}`;
+        return next(error);
+        // res.status(409).json({ success: false, title: "Duplicate e-mail", details: "A user with email " + req.body.email + " already exists.", instance: `${req.originalUrl}` });
       }
     });
     //Generate hashed password
