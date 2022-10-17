@@ -3,6 +3,8 @@ const Roles = require("../models/roles");
 const Teams = require("../models/teams");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const Sequelize = require("sequelize");
+const sequelize = require("../services/database");
 
 //index
 exports.index = ((res, req, next) => {
@@ -10,7 +12,7 @@ exports.index = ((res, req, next) => {
 });
 
 //get all Users
-exports.getAllUsers = ((req,res, next) => {
+exports.getAllUsers = ((req, res, next) => {
     Users.findAll({ where: req.query, attributes: { exclude: "password" },
       include: [
        { model: Roles, attributes: [ "name" ]},
@@ -18,7 +20,7 @@ exports.getAllUsers = ((req,res, next) => {
       ]})
       .then(
         (users) => {
-          res.status(200).json(users);
+          return res.status(200).json(users);
         },
         (err) => next(err)
       )
@@ -59,7 +61,7 @@ exports.createUser = (async (req, res, next) => {
                 user.addRole(role); //adds user role as default to every new user
               })
               .catch((err) => next(err));
-            res.status(201).json(user);
+            return res.status(201).json(user);
           },
           (err) => next(err)
         )
@@ -71,25 +73,41 @@ exports.createUser = (async (req, res, next) => {
 
 //update one User
 exports.updateUser = ((req, res, next) => {
-    res.status(405).json({ success: false, title: "PUT method not allowed", details: "PUT operation is not supported on /users", instance: `${req.originalUrl}` });
-    return;
+  const error = new Error("PUT operation is not supported on /users.");
+  error.status = 405;
+  error.title = "Method not allowed";
+  error.instance = `${req.method} ${req.originalUrl}`;
+  next(error);
+  return;
 });
 
 //delete Users
 exports.deleteUsers = (req, res, next) => {
   if (Object.entries(req.query).length == 0) {
-    res.status(405).json({ success: false, title: "DELETE method not allowed", details: "DELETE operation is not supported on /users", instance: `${req.originalUrl}` });
+    const error = new Error("DELETE operation is not supported on /users.");
+    error.status = 405;
+    error.title = "Method not allowed";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
     return;
   }
-  res.status(405).json({ success: false, title: "Method not allowed", details: "DELETE operation is not supported on /users", instance: `${req.originalUrl}` });
-  return;
+ const error = new Error("DELETE operation is not supported on /users.");
+ error.status = 405;
+ error.title = "Method not allowed";
+ error.instance = `${req.method} ${req.originalUrl}`;
+ next(error);
+ return;
 };
 
 //get one User by Id
 exports.getUserById = ((req, res, next) => {
   if (!req.params.userId) {
-     res.status(400).json({ success: false, title: "Empty request", details: `The id of an user must be provided.`, instance: `${req.originalUrl}` });
-     return;
+    const error = new Error("The id of an user must be provided.");
+    error.status = 400;
+    error.title = "Empty request";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
+    return;
   }
     Users.findByPk((req.params.userId), {
   include: [{ model: Teams, attributes: [ "name" ]}],
@@ -98,35 +116,49 @@ exports.getUserById = ((req, res, next) => {
   }
 })
       .then((user) => {
-        res.status(200).json(user);
-        return;
-      })
-      .catch((err) => next(err));
+        return res.status(200).json(user);
+      }).catch((err) => next(err));
 });
 
 //create a user with an Id
 exports.createUserWithId = (req, res, next) => {
-  res.status(405).json({ success: false, title: "POST method not allowed", details: "POST operation is not supported on /users/:id", instance: `${req.originalUrl}` });
+  const error = new Error("POST operation is not supported on /users/:id");
+  error.status = 405;
+  error.title = "Method not allowed";
+  error.instance = `${req.method} ${req.originalUrl}`;
+  next(error);
   return;
 };
 
 //update one user by Id 
 exports.updateUserById = (req, res, next) => {
    if (!req.params.userId) {
-     res.status(400).json({ success: false, title: "Empty request", details: `The id of an user must be provided.`, instance: `${req.originalUrl}` });
-     return;
+    const error = new Error("The id of an user must be provided.");
+    error.status = 400;
+    error.title = "Empty request";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
+    return;
    }
    if (req.user.id * 1 !== req.params.userId * 1) {
-     res.status(403).json({ success: false, title: "Invalid userId", details: `User with id ${req.user.id} is not allowed to update the user with id ${req.params.userId}.`, instance: `${req.originalUrl}` });
-     return;
+    const error = new Error(`User with id ${req.user.id} is not allowed to update the user with id ${req.params.userId}.`);
+    error.status = 403;
+    error.title = "Empty request";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
+    return;
    }
 
   let userId = req.params.userId;
 
   Users.findByPk(userId).then((user) => {
     if (!user) {
-      res.status(400).json({ success: false, title: "Unknown userId", details: `No User with id ${userId} found.`, instance: `${req.originalUrl}` });
-      return;
+       const error = new Error(`No User with id ${userId} found.`);
+       error.status = 400;
+       error.title = "Unknown userId";
+       error.instance = `${req.method} ${req.originalUrl}`;
+       next(error);
+       return;
     }
     //set updated_at ...
     req.body.updated_at = new Date();
@@ -146,33 +178,67 @@ exports.updateUserById = (req, res, next) => {
 //delete a user by Id
 exports.deleteUserById = (req, res, next) => {
    if (!req.params.userId) {
-     res.status(400).json({ success: false, title: "Empty request", details: `The id of an user must be provided.`, instance: `${req.originalUrl}` });
-     return;
+    const error = new Error("The id of an user must be provided.");
+    error.status = 400;
+    error.title = "Empty request";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
+    return;
    }
 
   let userId = req.params.userId;
 
   Users.findByPk(userId).then((user) => {
     if (!user) {
-      res.status(404).json({ success: false, title: "Unknown user", details: `No User with Id ${userId} found to delete.`, instance: `${req.originalUrl}` });
+      const error = new Error(`No User with id ${userId} found.`);
+      error.status = 400;
+      error.title = "Unknown userId";
+      error.instance = `${req.method} ${req.originalUrl}`;
+      next(error);
       return;
     }
     user.destroy();
-    res.status(200).json({ success: true, title: "User deleted", details: `User with Id ${userId} deleted.`, instance: `${req.originalUrl}` });
+    res.status(200).json({ success: true, title: "User deleted", details: `User with Id ${userId} deleted.`, instance: `${req.method} ${req.originalUrl}` });
     return;
   });
 };
 
 //user role management
 //Add a new role to an user
+/**
+ * 
+ * @param {*} req.params.userId, 
+ * @param {*} req.params.roleName (roleName is case sensitive)
+ * @param {*} res 
+ * @param {*} next 
+ * @returns user including roles as json Object 
+ */
 exports.addRoleToUser = (req, res, next) => {
   const userId = req.params.userId;
   const roleName = req.params.roleName;
-  if(!userId || !roleName) {
-    return res.status(400).json({ success: false, title: "Empty request", details: "UserId oder roleName is missing.", instance: `${req.originalUrl}` });
+  const teamName = req.params.teamName;
+
+  if (!userId || !roleName || (roleName.toLowerCase() === "teamcaptain" && !teamName)) {
+    const error = new Error("User id or role name is missing. Or if the role is 'team captain' the team name may be missing.");
+    error.status = 400;
+    error.title = "Data missing";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    return next(error);
   }
+  //   Teams.findOne({ where: { team_name: sequelize.where(sequelize.fn("LOWER", sequelize.col("team_name")), "LIKE", "%" + teamName.toLowerCase() + "%") } }) //LOWER function makes where query case insenstitive
+  //   .then((team) => {
+  //     if (!team) {
+  //       const error = new Error("A team with the name " + teamName + " doesn't exist. Check the name of the team and the spelling team name.");
+  //       error.status = 400;
+  //       error.title = "Unknown team";
+  //       error.instance = `${req.method} ${req.originalUrl}`;
+  //       return next(error);
+  //     }
+  //   });
+  // }
+
   Users.findByPk(userId, {
-    include: [{ model: Roles }],
+    include: [{ model: Roles }, { model: Teams }],
     attributes: {
       exclude: ["password"],
     },
@@ -181,16 +247,21 @@ exports.addRoleToUser = (req, res, next) => {
       if (!user) {
         return res.status(404).json({ success: false, title: "Unknown user", details: `User with Id ${userId} could not be found.`, instance: `${req.originalUrl}` });
       }
+      if(roleName.toLowerCase() !== "teamcaptain" && roleName.toLowerCase() !== "eventowner") {
       const role = user.roles.filter((role) => role.name === roleName)[0];
       if (role) {
         return res.status(200).json(user);
       }
+    }
+    else {
+      return res.status(405).json({ title: "In development", details: "The handling for the roles 'team captain' and 'event owner' are still to be designed.", instance: `${req.method} ${req.originalUrl}` })
+    }
       Roles.findOne({ where: { name: roleName } }) //searches for role
         .then((role) => {
           if(!role) {
             return res.status(404).json({ success: false, status: "Unknown role", message: `Role ${roleName} doesn't exist.`, instance: `${req.originalUrl}` })
           }
-          user.addRole(role) //adds role to the user
+          user.addRole(role, { through: { team_id: team.id || null }}) //adds role to the user
          .then(() => {
               Users.findByPk(userId, {
                 include: [{ model: Roles }],
@@ -203,11 +274,19 @@ exports.addRoleToUser = (req, res, next) => {
 };
 
 //Remove a role from a user
+/**
+ * 
+ * @param {*} req.params.userId, 
+ * @param {*} req.params.roleName (roleName is case sensitive)
+ * @param {*} res 
+ * @param {*} next 
+ * @returns user including roles as json Object 
+ */
 exports.removeRoleFromUser = (req, res, next) => {
   const userId = req.params.userId;
   const roleName = req.params.roleName;
-  if(!userId || !roleName) {
-    return res.status(400).json({ success: false, title: "Empty request", details: "UserId oder roleName is missing.", instance: `${req.originalUrl}` });
+  if(!userId || !roleName || roleName.toLowerCase() === "user") {
+    return res.status(400).json({ success: false, title: "Bad request", details: "UserId or roleName is missing. Or you try to remove the role 'user' what is not allowed.", instance: `${req.originalUrl}` });
   }
   Users.findByPk(userId, {
     include: [{ model: Roles }],
@@ -219,7 +298,7 @@ exports.removeRoleFromUser = (req, res, next) => {
       if (!user) {
         return res.status(404).json({ success: false, title: "Unknown user", details: `User with Id ${userId} not found.`, instance: `${req.originalUrl}` });
       }
-      const role = user.roles.filter((role) => role.name === roleName)[0];
+      const role = user.roles.filter((role) => role.name.toLowerCase() === roleName.toLowerCase())[0];
       if (!role) {
         return res.status(200).json(user);
       }

@@ -8,10 +8,10 @@ userRouter.use(express.json());
 
 userRouter
   .route("/api/v1/users", userController.index) //Only for admin
-  .get(authMiddleware.isLoggedIn, authMiddleware.hasRole("writer"), userController.getAllUsers) 
-  .post(userController.createUser)
+  .get(authMiddleware.isLoggedIn, authMiddleware.hasRole(["admin", "superAdmin"]), userController.getAllUsers)
+  .post(authMiddleware.isLoggedIn, authMiddleware.hasRole(["admin", "superAdmin"]), userController.createUser)
   .put(authMiddleware.isLoggedIn, userController.updateUser)
-  .delete(authMiddleware.isLoggedIn, userController.deleteUsers);
+  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole(["admin", "superAdmin"]), userController.deleteUsers);
 
 userRouter
   .route("/api/v1/users/:userId?")
@@ -21,7 +21,7 @@ userRouter
   .delete(authMiddleware.isLoggedIn, userController.deleteUserById); //Only for admin
 
 userRouter
-  .route("/api/v1/users/addRole/:userId/:roleName?")
+  .route("/api/v1/users/addRole/:userId/:roleName/:teamName?")
   .get(authMiddleware.isLoggedIn, userController.addRoleToUser);
 
 userRouter
