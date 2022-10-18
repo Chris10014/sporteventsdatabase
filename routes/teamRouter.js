@@ -20,4 +20,12 @@ teamRouter
   .put(authMiddleware.isLoggedIn, teamController.updateTeamById)
   .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin"]), teamController.deleteTeamById);
 
+teamRouter
+  .route("/api/v1/addMember/:teamId/:userId")
+  .get(authMiddleware.isLoggedIn, teamController.addMemberToTeam);
+
+teamRouter
+  .route("/api/v1/removeMember/:teamId/:userId")
+  .get(authMiddleware.isLoggedIn, teamController.removeMemberFromTeam);
+
 module.exports = teamRouter;

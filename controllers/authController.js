@@ -38,14 +38,15 @@ exports.registerUser = async (req, res, next) => {
     const activationToken = utils.createActivationToken();
     const tokenExpiresAt = new Date(activationToken.split(".")[1] * 1000).toLocaleString("de-DE");
     req.body.activation_token = activationToken;
+    req.body.role_id = 1; //default role = user
     Users.create(req.body)
       .then(
         (user) => {
-          Roles.findOne({ where: { name: "user" } }) //searches for role user
-            .then((role) => {
-              user.addRole(role); //adds user role as default to every new user
-            })
-            .catch((err) => next(err));
+        //   Roles.findOne({ where: { name: "user" } }) //searches for role user
+        //     .then((role) => {
+        //       user.addRole(role); //adds user role as default to every new user
+        //     })
+        //     .catch((err) => next(err));
           //send activation link
           mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name, ({ err, info }) => {
             if (err) {
@@ -60,9 +61,8 @@ exports.registerUser = async (req, res, next) => {
             }
             res.status(200).json(user);
             return;
-          });
-        },
-        (err) => next(err)
+          })
+        }
       )
       .catch((err) => next(err));
   } catch (err) {

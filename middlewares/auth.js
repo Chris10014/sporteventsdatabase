@@ -23,10 +23,18 @@ module.exports = {
         error.instance = `${req.method} ${req.originalUrl}`;
         error.error = err;
       }
-      req.user = user; //binds the logged in userId and email to req.user object
-      console.log("isLoggedIn: ", req.user.id);
-      next();
-      return;
+      Users.findByPk(user.id, {
+        include: [{ model: Roles }],
+        attributes: {
+          exclude: ["password"],
+        },
+      }).then((user) => {
+        req.user = user; //binds the logged in user req.user object
+        console.log("isLoggedIn: ", req.user);
+        next();
+        return;
+      });
+      
     });
   },
 

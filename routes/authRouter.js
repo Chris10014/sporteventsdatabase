@@ -14,6 +14,5 @@ authRouter
   .get("/api/v1/deleteAccount/:userId?", authMiddleware.isLoggedIn, authController.deleteUserAccount)
   .get("/api/v1/activate/:userId/:activationToken", authController.activateAccount)
   .get("/api/v1/activationLink/:email?", authController.resendActivationLink)
-  .post("/api/v1/addTeamCaptain", authMiddleware.isLoggedIn, authController.addRoleTeamCaptain);
 
 module.exports = authRouter;

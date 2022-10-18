@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
 const Countries = require("../models/countries");
+const Users = require("../models/users");
 
 const Teams = sequelize.define(
   "teams",
@@ -58,5 +59,29 @@ const Teams = sequelize.define(
     updatedAt: "updated_at", // alias updatedAt as updated_at
   }
 );
+
+//Users can be member in many teams and a team can have up to X team v´captains
+const users_have_teams = sequelize.define(
+  "users_have_teams",
+  {
+    team_captain: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+  },
+  { timestamps: false }
+);
+
+Users.belongsToMany(Teams, {
+  through: "users_have_teams",
+  foreignKey: "user_id", //replaces userId (source model)
+  otherKey: "team_id",
+});
+
+Teams.belongsToMany(Users, {
+  through: "users_have_teams",
+  foreignKey: "team_id", //replaces teamId (source model)
+  otherKey: "user_id",
+});
 
 module.exports = Teams;

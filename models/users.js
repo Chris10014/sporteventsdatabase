@@ -44,12 +44,12 @@ const Users = sequelize.define(
           msg: "Bitte eine richtige E-Mail Adresse angeben.",
         },
         isUnique(value) {
-         return Users.findOne({ where: { email: value } }).then((email) => {
+          return Users.findOne({ where: { email: value } }).then((email) => {
             if (email) {
-                throw new Error("E-mail " + value + " already exists.");
-              }
+              throw new Error("E-mail " + value + " already exists.");
+            }
           });
-        }
+        },
       },
       unique: true,
     },
@@ -94,7 +94,11 @@ const Users = sequelize.define(
     },
     activation_token: {
       type: Sequelize.STRING,
-      allowNull: true
+      allowNull: true,
+    },
+    role_id: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
     },
     last_login: {
       type: Sequelize.DATE,
@@ -136,16 +140,17 @@ Roles.belongsToMany(Users, {
   otherKey: "user_id"
 });
 
-Users.belongsToMany(Teams, {
-  through: "users_have_teams",
-  foreignKey: "user_id", //repalces userId (source model)
-  otherKey: "team_id",
+
+
+Roles.hasMany(Users, {
+  foreignKey: "role_id",
+});
+Users.belongsTo(Roles, {
+  // as: "role", //Alias in user model 
+  foreignKey: "role_id",
 });
 
-Teams.belongsToMany(Users, {
-  through: "users_have_teams",
-  foreignKey: "team_id", //replaces teamId (source model)
-  otherKey: "user_id",
-});
+//Users can be member in many teams and a team can have up to X team captains
+
 
 module.exports = Users;
