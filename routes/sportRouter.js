@@ -9,15 +9,15 @@ sportRouter.use(express.json());
 sportRouter
   .route("/api/v1/sports", sportController.index)
   .get(sportController.getAllSports)
-  .post(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin", "editor"]), sportController.createSport)
-  .put(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin", "editor"]), sportController.updateSport) //Not supported
-  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin", "editor"]), sportController.deleteSports);//Not supported
+  .post(authMiddleware.isLoggedIn, authMiddleware.hasRole("editor"), sportController.createSport)
+  .put(authMiddleware.isLoggedIn, authMiddleware.hasRole("editor"), sportController.updateSport) //Not supported
+  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole("editor"), sportController.deleteSports);//Not supported
 
 sportRouter
   .route("/api/v1/sports/:sportId")
   .get(sportController.getSportById)
-  .post(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin", "editor"]), sportController.createSportWithId) //Not supported
-  .put(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin", "editor"]), sportController.updateSportById)
-  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin", "editor"]), sportController.deleteSportById);
+  .post(authMiddleware.isLoggedIn, authMiddleware.hasRole("editor"), sportController.createSportWithId) //Not supported
+  .put(authMiddleware.isLoggedIn, authMiddleware.hasRole("editor"), sportController.updateSportById)
+  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole("editor"), sportController.deleteSportById);
 
 module.exports = sportRouter;

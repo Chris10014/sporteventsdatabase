@@ -65,7 +65,7 @@ app.listen(port, () => {
 // catch 404 and forward to error handler
 app.use((req, res, next)  => {
   const error = new Error("Resource not found. Please check your request url.")
-  error.status(404);
+  error.status = 404;
   error.title = "Not found";
   next(error);
 });

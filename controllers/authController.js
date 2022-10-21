@@ -79,7 +79,7 @@ exports.loginUser = async (req, res, next) => {
     },
   })
     .then((user) => {
-      if (user == null) {
+      if (user == null || !user) {
         const error = new Error("Username and password don't match.")
         error.status= 401;
         error.title =  "Login failed";
@@ -92,7 +92,7 @@ exports.loginUser = async (req, res, next) => {
         error.title = "Account not activated";
         error.instance = `${req.method} ${req.originalUrl}`;
         error.resendActivationLinkUrl = `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`;
-       return;
+        return next(error);
       }
       let userId = user.id; //makes userId available for the next then() block
       let firstName = user.first_name;

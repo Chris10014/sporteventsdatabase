@@ -117,31 +117,6 @@ const Users = sequelize.define(
   }
 );
 
-const users_have_roles = sequelize.define(
-  "users_have_roles",
-  {
-    team_id: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-    },
-  },
-  { timestamps: false }
-);
-
-Users.belongsToMany(Roles, {
-  through: "users_have_roles",
-  foreignKey: "user_id", //replaces userId (source model)
-  otherKey: "role_id"
-});
-
-Roles.belongsToMany(Users, {
-  through: "users_have_roles",
-  foreignKey: "role_id", //replaces roleId (source model)
-  otherKey: "user_id"
-});
-
-
-
 Roles.hasMany(Users, {
   foreignKey: "role_id",
 });

@@ -11,14 +11,14 @@ teamRouter
   .get(teamController.getAllTeams)
   .post(authMiddleware.isLoggedIn, teamController.createTeam)
   .put(authMiddleware.isLoggedIn, teamController.updateTeam) //Not supported
-  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole([ "superAdmin", "admin" ]), teamController.deleteTeams);//Not supported
+  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole("admin"), teamController.deleteTeams);//Not supported
 
 teamRouter
   .route("/api/v1/teams/:teamId")
   .get(teamController.getTeamById)
   .post(authMiddleware.isLoggedIn, teamController.createTeamWithId) //Not supported
   .put(authMiddleware.isLoggedIn, teamController.updateTeamById)
-  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole(["superAdmin", "admin"]), teamController.deleteTeamById);
+  .delete(authMiddleware.isLoggedIn, authMiddleware.hasRole("admin"), teamController.deleteTeamById);
 
 teamRouter
   .route("/api/v1/addMember/:teamId/:userId")

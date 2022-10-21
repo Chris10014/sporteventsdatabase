@@ -1,3 +1,5 @@
+"use strict"
+
 const Users = require("../models/users");
 const Roles = require("../models/roles");
 const Teams = require("../models/teams");
@@ -110,12 +112,19 @@ exports.getUserById = ((req, res, next) => {
     return;
   }
     Users.findByPk((req.params.userId), {
-  include: [{ model: Teams, attributes: [ "name" ]}],
+  include: [{ model: Teams, attributes: [ "team_name" ]}],
   attributes: {
      exclude: ['password']
   }
 })
       .then((user) => {
+        if(!user) {
+          const error = new Error(`User with id ${req.params.userId} not found.`);
+          error.status = 404;
+          error.title = "Unknown user";
+          error.instance = `${req.method} ${req.originalUrl}`;
+          return next(error);
+        }
         return res.status(200).json(user);
       }).catch((err) => next(err));
 });
@@ -203,121 +212,6 @@ exports.deleteUserById = (req, res, next) => {
   });
 };
 
-//user role management
-//Add a new role to an user
-/**
- * 
- * @param {*} req.params.userId, 
- * @param {*} req.params.roleName (roleName is case sensitive)
- * @param {*} res 
- * @param {*} next 
- * @returns user including roles as json Object 
- */
-exports.addRoleToUser = (req, res, next) => {
-  const userId = req.params.userId;
-  const roleName = req.params.roleName;
-  const teamName = req.params.teamName;
-
-  if (!userId || !roleName || (roleName.toLowerCase() === "teamcaptain" && !teamName)) {
-    const error = new Error("User id or role name is missing. Or if the role is 'team captain' the team name may be missing.");
-    error.status = 400;
-    error.title = "Data missing";
-    error.instance = `${req.method} ${req.originalUrl}`;
-    return next(error);
-  }
-  //   Teams.findOne({ where: { team_name: sequelize.where(sequelize.fn("LOWER", sequelize.col("team_name")), "LIKE", "%" + teamName.toLowerCase() + "%") } }) //LOWER function makes where query case insenstitive
-  //   .then((team) => {
-  //     if (!team) {
-  //       const error = new Error("A team with the name " + teamName + " doesn't exist. Check the name of the team and the spelling team name.");
-  //       error.status = 400;
-  //       error.title = "Unknown team";
-  //       error.instance = `${req.method} ${req.originalUrl}`;
-  //       return next(error);
-  //     }
-  //   });
-  // }
-
-  Users.findByPk(userId, {
-    include: [{ model: Roles }, { model: Teams }],
-    attributes: {
-      exclude: ["password"],
-    },
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ success: false, title: "Unknown user", details: `User with Id ${userId} could not be found.`, instance: `${req.originalUrl}` });
-      }
-      if(roleName.toLowerCase() !== "teamcaptain" && roleName.toLowerCase() !== "eventowner") {
-      const role = user.roles.filter((role) => role.name === roleName)[0];
-      if (role) {
-        return res.status(200).json(user);
-      }
-    }
-    else {
-      return res.status(405).json({ title: "In development", details: "The handling for the roles 'team captain' and 'event owner' are still to be designed.", instance: `${req.method} ${req.originalUrl}` })
-    }
-      Roles.findOne({ where: { name: roleName } }) //searches for role
-        .then((role) => {
-          if(!role) {
-            return res.status(404).json({ success: false, status: "Unknown role", message: `Role ${roleName} doesn't exist.`, instance: `${req.originalUrl}` })
-          }
-          user.addRole(role, { through: { team_id: team.id || null }}) //adds role to the user
-         .then(() => {
-              Users.findByPk(userId, {
-                include: [{ model: Roles }],
-              }).then((user) => {
-                return res.status(200).json(user);
-              }).catch((err) => next(err));
-            }).catch((err) => next(err));
-        }).catch((err) => next(err));
-    }).catch((err) => next(err));
-};
-
-//Remove a role from a user
-/**
- * 
- * @param {*} req.params.userId, 
- * @param {*} req.params.roleName (roleName is case sensitive)
- * @param {*} res 
- * @param {*} next 
- * @returns user including roles as json Object 
- */
-exports.removeRoleFromUser = (req, res, next) => {
-  const userId = req.params.userId;
-  const roleName = req.params.roleName;
-  if(!userId || !roleName || roleName.toLowerCase() === "user") {
-    return res.status(400).json({ success: false, title: "Bad request", details: "UserId or roleName is missing. Or you try to remove the role 'user' what is not allowed.", instance: `${req.originalUrl}` });
-  }
-  Users.findByPk(userId, {
-    include: [{ model: Roles }],
-    attributes: {
-      exclude: ["password"],
-    },
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ success: false, title: "Unknown user", details: `User with Id ${userId} not found.`, instance: `${req.originalUrl}` });
-      }
-      const role = user.roles.filter((role) => role.name.toLowerCase() === roleName.toLowerCase())[0];
-      if (!role) {
-        return res.status(200).json(user);
-      }
-      Roles.findOne({ where: { name: roleName } }) //searches for role
-        .then((role) => {
-          if (!role) {
-            return res.status(404).json({ success: false, title: "Unknown role", details: `Role ${roleName} doesn't exist.`, instance: `${req.originalUrl}` });
-          }
-         user.removeRole(role) //remove role from a the user
-         .then(() => {
-              Users.findByPk(userId, {
-                include: [{ model: Roles }],
-              }).then((user) => {
-                return res.status(200).json(user);
-              }).catch((err) => next(err));
-            }).catch((err) => next(err));
-        }).catch((err) => next(err));
-    }).catch((err) => next(err));
-}
 
 //Teammanagement
 //Add a new team to an user
