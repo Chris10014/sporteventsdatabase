@@ -36,34 +36,26 @@ exports.registerUser = async (req, res, next) => {
     delete req.body.password_confirmation; //Field doesn't exist in model and db
     //get an activation token
     const activationToken = utils.createActivationToken();
-    const tokenExpiresAt = new Date(activationToken.split(".")[1] * 1000).toLocaleString("de-DE");
     req.body.activation_token = activationToken;
     req.body.role_id = 1; //default role = user
     Users.create(req.body)
-      .then(
-        (user) => {
-        //   Roles.findOne({ where: { name: "user" } }) //searches for role user
-        //     .then((role) => {
-        //       user.addRole(role); //adds user role as default to every new user
-        //     })
-        //     .catch((err) => next(err));
-          //send activation link
-          mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name, ({ err, info }) => {
-            if (err) {
-              const error = new Error(`Activation link wasn't send to the new account with email ${user.email}. Please request for an activation link again.`);
-              error.status = 401;
-              error.title = "Activation link not send";
-              error.instance = `${req.method} ${req.originalUrl}`;
-              error.resendActivationLinkUrl = `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`;
-              error.user = user;
-              next(error);
-              return;
-            }
-            res.status(200).json(user);
+      .then((user) => {
+        //send activation link
+        mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name, randomPW = null, ({ err, info }) => { //randomPw only used for users/createUsers
+          if (err) {
+            const error = new Error(`Activation link wasn't send to the new account with email ${user.email}. Please request for an activation link again.`);
+            error.status = 401;
+            error.title = "Activation link not send";
+            error.instance = `${req.method} ${req.originalUrl}`;
+            error.resendActivationLinkUrl = `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`;
+            error.user = user;
+            next(error);
             return;
-          })
-        }
-      )
+          }
+          res.status(200).json(user);
+          return;
+        });
+      })
       .catch((err) => next(err));
   } catch (err) {
     next(err);
@@ -80,9 +72,9 @@ exports.loginUser = async (req, res, next) => {
   })
     .then((user) => {
       if (user == null || !user) {
-        const error = new Error("Username and password don't match.")
-        error.status= 401;
-        error.title =  "Login failed";
+        const error = new Error("Username and password don't match.");
+        error.status = 401;
+        error.title = "Login failed";
         error.instance = `${req.method} ${req.originalUrl}`;
         return;
       }
@@ -124,8 +116,10 @@ exports.loginUser = async (req, res, next) => {
             next(error);
             return;
           }
-        }).catch((err) => next(err));
-    }).catch((err) => next(err));
+        })
+        .catch((err) => next(err));
+    })
+    .catch((err) => next(err));
 };
 
 //logout a user
@@ -144,12 +138,13 @@ exports.logoutUser = (req, res, next) => {
 
 //activate an user account
 exports.activateAccount = (req, res, next) => {
+  console.log("activateAccount:password:", req.body.password)
   const activationToken = req.params.activationToken;
   const tokenExpiresAt = req.params.activationToken.split(".")[1];
   const userId = req.params.userId;
   if (!req.params.activationToken || !req.params.userId) {
     const error = new Error("No activation token or userId present.");
-    error.status = (400);
+    error.status = 400;
     error.title = "Data missing";
     error.instance = `${req.method} ${req.originalUrl}`;
     next(error);
@@ -171,13 +166,13 @@ exports.activateAccount = (req, res, next) => {
       return;
     }
     if (activationToken !== user.activation_token) {
-       const error = new Error("Invalid activation token. Request a new activation link.");
-       error.status = 400;
-       error.title = "Invalid token";
-       error.instance = `${req.method} ${req.originalUrl}`;
-       error.resendActivationLinkUrl = `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`;
-       next(error);
-       return;
+      const error = new Error("Invalid activation token. Request a new activation link.");
+      error.status = 400;
+      error.title = "Invalid token";
+      error.instance = `${req.method} ${req.originalUrl}`;
+      error.resendActivationLinkUrl = `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`;
+      next(error);
+      return;
     }
     if (tokenExpiresAt < new Date().getTime() / 1000) {
       const error = new Error("Activation token is expired. Request a new activation link.");
@@ -207,12 +202,12 @@ exports.activateAccount = (req, res, next) => {
 exports.resendActivationLink = (req, res, next) => {
   const email = req.params.email;
   if (!email) {
-     const error = new Error("E-Mail address is missing.");
-     error.status = 400;
-     error.title = "Empty request";
-     error.instance = `${req.method} ${req.originalUrl}`;
-     next(error);
-     return;
+    const error = new Error("E-Mail address is missing.");
+    error.status = 400;
+    error.title = "Empty request";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
+    return;
   }
   Users.findOne({
     where: {
@@ -244,66 +239,67 @@ exports.resendActivationLink = (req, res, next) => {
           updated_at: new Date(),
         })
         .then(() => {
-          mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name, ({ err, info }) => {
+          mailer.sendActivationLink(user.email, user.id, activationToken, user.first_name, randomPw = null, ({ err, info }) => {
             if (err) {
-               const error = new Error(`Activation link wasn't send to the new account with email ${user.email}. Please request for an activation link again.`);
-               error.status = 401;
-               error.title = "Activation link not send";
-               error.instance = `${req.method} ${req.originalUrl}`;
-               error.resendActivationLinkUrl = `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`;
-               error.user = user;
-               next(error);
-               return;
+              const error = new Error(`Activation link wasn't send to the new account with email ${user.email}. Please request for an activation link again.`);
+              error.status = 401;
+              error.title = "Activation link not send";
+              error.instance = `${req.method} ${req.originalUrl}`;
+              error.resendActivationLinkUrl = `${variables.base_url}:${variables.port}/api/V1/activationLink/${user.email}`;
+              error.user = user;
+              next(error);
+              return;
             }
             res.status(200).json({ success: true, status: "Activation link send", messageId: info.messageId, error: null });
             return;
           });
-        }).catch((err) => next(err));
-    }).catch((err) => next(err));
+        })
+        .catch((err) => next(err));
+    })
+    .catch((err) => next(err));
 };
 
-exports.deleteUserAccount = ((req, res, next) => {
-  if(!req.user.id || !req.params.userId) {
-     const error = new Error("No user data present or user not logged in.");
-     error.status = 400;
-     error.title = "Empty request";
-     error.instance = `${req.method} ${req.originalUrl}`;
-     next(error);
-     return;
+exports.deleteUserAccount = (req, res, next) => {
+  if (!req.user.id || !req.params.userId) {
+    const error = new Error("No user data present or user not logged in.");
+    error.status = 400;
+    error.title = "Empty request";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
+    return;
   }
-  if(req.user.id*1 !== req.params.userId*1) {
-     const error = new Error(`Not allowed to delete user with id ${req.params.userId}.`);
-     error.status = 400;
-     error.title = "Not authorized";
-     error.instance = `${req.method} ${req.originalUrl}`;
-     next(error);
-     return;
+  if (req.user.id * 1 !== req.params.userId * 1) {
+    const error = new Error(`Not allowed to delete user with id ${req.params.userId}.`);
+    error.status = 400;
+    error.title = "Not authorized";
+    error.instance = `${req.method} ${req.originalUrl}`;
+    next(error);
+    return;
   }
   let userId = req.user.id;
   Users.findByPk(userId).then((user) => {
     if (!user) {
-       const error = new Error(`No User with id ${userId} found.`);
-       error.status = 400;
-       error.title = "Unknown user id";
-       error.instance = `${req.method} ${req.originalUrl}`;
-       next(error);
-       return;
+      const error = new Error(`No User with id ${userId} found.`);
+      error.status = 400;
+      error.title = "Unknown user id";
+      error.instance = `${req.method} ${req.originalUrl}`;
+      next(error);
+      return;
     }
     req.user = null;
-    user.destroy()
+    user.destroy();
     res.status(200).json({ success: true, status: "User account deleted", details: `User with Id ${userId} deleted.` });
     //to be done: logout user after account is deleted
     return;
   });
-
-});
+};
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
- * @returns 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
  * todo: primary key over all 3 columns of the junction table
  * example: [{user_id: 1, role_id: 4, team_id: 1}, {user_id: 1, role_id: 4, team_id: 2}} must be possible
  */
@@ -313,7 +309,7 @@ exports.addRoleTeamCaptain = (req, res, next) => {
   const teamId = req.body.team_id;
   console.log("addTeamCaptain: ", userId + ", " + teamId);
   //Check is user is and team id present
-  if(!userId || !teamId) {
+  if (!userId || !teamId) {
     const error = new Error("User id or team id is missing");
     error.status = 400;
     error.title = "Data missing";
@@ -325,54 +321,54 @@ exports.addRoleTeamCaptain = (req, res, next) => {
     include: [{ model: Roles }, { model: Teams }],
     attributes: {
       exclude: ["password"],
-    }
+    },
   })
-  .then((user) => {
-    if(!user) {
+    .then((user) => {
+      if (!user) {
         const error = new Error(`User with id ${userId} not found.`);
         error.status = 400;
         error.title = "Unknown user";
         error.instance = `${req.method} ${req.originalUrl}`;
         next(error);
         return;
-    }
-    Teams.findByPk(teamId)
-    .then((team) => {
-      if (!team) {
-        const error = new Error(`Team with id ${teamId} not found.`);
-        error.status = 400;
-        error.title = "Unknown team";
-        error.instance = `${req.method} ${req.originalUrl}`;
-        next(error);
-        return;
       }
-      const userRole = user.roles.filter((role) => role.name.toLowerCase() === "teamcaptain" && role.users_have_roles.team_id === teamId)[0];
-      if (userRole) {
-        return res.status(200).json({ success: true, title: "Already team captain", details: `The user with id ${userId} is already team captain of the team with id ${teamId}.`, user: user });
-      }
-      //Then add the role with the new team id again
-      Roles.findOne({ where: { name: "teamCaptain" } }) //searches for role
-        .then((role) => {
-          user
-            .addRole(role, { through: { team_id: teamId } })
-            .then(() => {
-              Users.findByPk(userId, {
-                include: [{ model: Roles }, { model: Teams }],
-                attributes: {
-                  exclude: ["password"],
-                },
-              }).then((user) => {
-                return res.status(201).json({ success: true, title: "Role created", details: `User with id ${userId} is now team captain of team with id ${teamId}.`, user: user });
-              });
+      Teams.findByPk(teamId)
+        .then((team) => {
+          if (!team) {
+            const error = new Error(`Team with id ${teamId} not found.`);
+            error.status = 400;
+            error.title = "Unknown team";
+            error.instance = `${req.method} ${req.originalUrl}`;
+            next(error);
+            return;
+          }
+          const userRole = user.roles.filter((role) => role.name.toLowerCase() === "teamcaptain" && role.users_have_roles.team_id === teamId)[0];
+          if (userRole) {
+            return res.status(200).json({ success: true, title: "Already team captain", details: `The user with id ${userId} is already team captain of the team with id ${teamId}.`, user: user });
+          }
+          //Then add the role with the new team id again
+          Roles.findOne({ where: { name: "teamCaptain" } }) //searches for role
+            .then((role) => {
+              user
+                .addRole(role, { through: { team_id: teamId } })
+                .then(() => {
+                  Users.findByPk(userId, {
+                    include: [{ model: Roles }, { model: Teams }],
+                    attributes: {
+                      exclude: ["password"],
+                    },
+                  }).then((user) => {
+                    return res.status(201).json({ success: true, title: "Role created", details: `User with id ${userId} is now team captain of team with id ${teamId}.`, user: user });
+                  });
+                })
+                .catch((error) => next(error));
             })
             .catch((error) => next(error));
+
+          console.log(userRole);
+          // return res.status(200).json(userRoles);
         })
         .catch((error) => next(error));
-      
-
-      console.log(userRole);
-      // return res.status(200).json(userRoles);
-    }).catch((error) => next(error));
-  }).catch((error) => next(error));
-  
+    })
+    .catch((error) => next(error));
 };

@@ -98,7 +98,7 @@ const Users = sequelize.define(
     },
     role_id: {
       type: Sequelize.INTEGER,
-      allowNull: true,
+      defaultValue: 1,
     },
     last_login: {
       type: Sequelize.DATE,

@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../services/database");
-const Countries = require("../models/countries");
 const Users = require("../models/users");
 
 const Teams = sequelize.define(
@@ -60,13 +59,18 @@ const Teams = sequelize.define(
   }
 );
 
-//Users can be member in many teams and a team can have up to X team v´captains
+//Users can be member in many teams and a team can have up to X team captains
+//User must be admitted to a team
 const users_have_teams = sequelize.define(
   "users_have_teams",
   {
     team_captain: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
+    },
+    admitted: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     },
   },
   { timestamps: false }

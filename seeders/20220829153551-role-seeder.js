@@ -20,7 +20,7 @@ module.exports = {
      },
      {
        name: "eventOwner",
-       description: "A registered user who can insert new sport events. The eventOwener can change and upate the event he has inserted.",
+       description: "A registered user who can insert new sport events. The eventOwener can change and upate the events he has inserted.",
        created_at: new Date(),
        updated_at: new Date(),
      },
@@ -45,7 +45,7 @@ module.exports = {
      },
      {
        name: "superAdmin",
-       description: "The super admin can edit, delete and create sport events including the points, users and teams.",
+       description: "The super admin can do anything.",
        created_at: new Date(),
        updated_at: new Date(),
      },

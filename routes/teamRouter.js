@@ -28,4 +28,16 @@ teamRouter
   .route("/api/v1/removeMember/:teamId/:userId")
   .get(authMiddleware.isLoggedIn, teamController.removeMemberFromTeam);
 
+teamRouter
+.route("/api/v1/askForAdmission/:teamId")
+.get(authMiddleware.isLoggedIn, teamController.askForTeamAdmission);
+
+teamRouter
+.route("/api/v1/confirmAdmission/:teamId/:memberId")
+.get(teamController.confirmTeamAdmission);
+
+teamRouter
+.route("/api/v1/rejectAdmission/:teamId/:memberId")
+.get(teamController.rejectTeamAdmission);
+
 module.exports = teamRouter;

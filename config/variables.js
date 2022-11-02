@@ -2,6 +2,7 @@
  * Schreibt Umgebungsvariablen aus .env File in das Objekt variables
  */
 require("dotenv").config() //importiert dotev
+
  module.exports = {
    //exportiert die Umgebungsvariablen
    //Generell

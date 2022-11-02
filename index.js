@@ -46,7 +46,7 @@ app.use(logger("dev")); //Logs all requests to console
 app.use(authRouter);
 app.use(userRouter);
 
-app.use(authMiddleware.isLoggedIn);
+// app.use(authMiddleware.isLoggedIn);
 
 app.use(roleRouter);
 app.use(countryRouter);
