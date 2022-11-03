@@ -72,8 +72,8 @@ exports.sendTeamAdmission = async (user, team, callback) => {
     from: "teams@bigpoints.de",
     to: email,
     subject: `Aufnahme ins Team ${teamName}`,
-    text: `Lieber ${firstName}, \n\nherzlich willkommen im Team ${teamName}. Wir freuen uns, dich im Team begrüßen zu dürfen. Deine Aufnahme wurde bestätigt.\n\nSportliche Grüße vom Team Captain\n${captainName}`,
-    html: `<p><b>Lieber ${firstName}</b>,</br></br>herzlich willkommen im Team <b>${teamName}</b>. Wir freuen uns, dich im Team begrüßen zu dürfen. Deine Aufnahme wurde bestätigt.<br><br>Sportliche Grüße vom Team Captain<br>${captainName}`,
+    text: `Lieber ${firstName}, \n\nherzlich willkommen im Team ${teamName}. Wir freuen uns, dich im Team begrüßen zu dürfen. Deine Aufnahme ins Team wurde bestätigt.`,
+    html: `<p><b>Lieber ${firstName}</b>,</br></br>herzlich willkommen im Team <b>${teamName}</b>. Wir freuen uns, dich im Team begrüßen zu dürfen. Deine Aufnahme ins Team wurde bestätigt.`,
   };
 
   return await transport.sendMail(mailData, (err, info) => {

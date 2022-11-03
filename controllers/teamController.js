@@ -134,31 +134,40 @@ exports.addMemberToTeam = (req, res, next) => {
   const userId = req.params.userId;
   const teamId = req.params.teamId;
   if (!userId || !teamId) {
-    return res.status(400).json({ success: false, title: "Empty request", details: "User id or team id is missing.", instance: `${req.originalUrl}` });
+    const err = new Error("UserId oder teamId missing.");
+    err.status = 404;
+    err.title = "Empty request";
+    err.instance = `${req.method} ${originalUrl}`;
+    return next(err);
   }
-  Teams.findByPk(teamId, {
-    include: [{ model: Users }],
-  })
+  Teams.findByPk(teamId)
     .then((team) => {
       if (!team) {
-          return res.status(404).json({ success: false, title: "Unknown team", details: `A team with id ${userId} cold not be found.`, instance: `${req.originalUrl}` });
+        const err = new Error(`A team with id ${teamId} cold not be found.`);
+        err.status = 404;
+        err.title = "Unknown team";
+        err.instance = `${req.method} ${originalUrl}`;
+        return next(err);
       }
-      const user = team.users.filter((user) => user.id === userId)[0];
-      console.log("Pkt 3.1: " + userId + " " + teamId + " \n", user);
-      if (user) {
-        return res.status(200).json(team);
-      }
-      Users.findOne({ where: { id: userId } }) //searches for user
+      team.getUsers({ where: { id: userId } }).then((users) => {
+        if (users[0]) { //User is already member
+          console.log("\n\nuser: ", users, "\n\n")
+          return res.status(200).json({ title: "Already member", user: users[0] });
+        }
+      });
+      Users.findByPk(userId) //searches for user
         .then((user) => {
           if (!user) {
             return res.status(404).json({ success: false, title: "Unknown user", details: `A user with id ${userId} doesn't exist.`, instance: `${req.originalUrl}` });
           }
           team
-            .addUser(user) //adds team to the user
+            .addUser(user, { through: { admitted: true }}) //adds team to the user
             .then(() => {
               Teams.findByPk(teamId, {
-                include: [{ model: Users }],
-              }).then((team) => {
+                include: { 
+                  model: Users, 
+                where:  {id: userId}
+              }}).then((team) => {
                 return res.status(200).json(team);
               }).catch((err) => next(err));
             }).catch((err) => next(err));         
@@ -171,38 +180,51 @@ exports.removeMemberFromTeam = (req, res, next) => {
   const userId = req.params.userId;
   const teamId = req.params.teamId;
   if (!userId || !teamId) {
-    return res.status(400).json({ success: false, title: "Empty request", details: "UserId oder teamId missing.", instance: `${req.originalUrl}` });
+    const err = new Error("UserId oder teamId missing.");
+    err.status = 404;
+    err.title = "Empty request";
+    err.instance = `${req.method} ${originalUrl}`;
+    return next(err);
   }
-  Teams.findByPk(teamId, {
-    include: [{ model: Users }],
-  })
-    .then((team) => {
+  Teams.findByPk(teamId)
+  .then((team) => {
       if (!team) {
-        return res.status(400).json({ success: false, title: "Unknown team", details: `Team with id ${teamId} could not be found.`, instance: `${req.originalUrl}` });
+        const err = new Error(`A team with id ${teamId} cold not be found.`);
+        err.status = 404;
+        err.title = "Unknown team";
+        err.instance = `${req.method} ${originalUrl}`;
+        return next(err);
       }
-      const user = team.users.filter(async (user) => user.id === userId)[0];
-      console.log("\nUser: ", user);
-      if (!user) {
-        return res.status(200).json(team);
-      }
-      Users.findByPk(userId) //searches for user
-        .then((user) => {
-          if (!user) {
-            return res.status(404).json({ success: false, title: "Unknown user", details: `User with id ${userId} doesn't exist.`, instance: `${req.originalUrl}` });
-          }
-          team.removeUser(user) //remove user from team
-            .then(() => {
-              Teams.findByPk(teamId, {
-                include: [{ model: Users }],
-              })
-                .then((team) => {
-                  return res.status(200).json(team);
+      team.getUsers({ where: { id: userId } }).then((users) => {
+        if (!users[0]) {
+          res.status(200).json({ title: "No member", message: "The user wasn't member of this team.",  user: users[0] });
+          return;
+        }
+
+        Users.findByPk(userId) //searches for user
+          .then((user) => {
+            if (!user) {
+              const err = new Error(`A user with id ${userId} cold not be found.`);
+              err.status = 404;
+              err.title = "Unknown user";
+              err.instance = `${req.method} ${originalUrl}`;
+              return next(err);
+            }
+            team
+              .removeUser(user) //remove user from team
+              .then(() => {
+                Users.findByPk(userId, {
+                  include: [{ model: Teams }],
                 })
-                .catch((err) => next(err));
-            })
-            .catch((err) => next(err));
-        })
-        .catch((err) => next(err));
+                  .then((user) => {
+                    return res.status(200).json(user);
+                  })
+                  .catch((err) => next(err));
+              })
+              .catch((err) => next(err));
+          })
+          .catch((err) => next(err));
+      });
     })
     .catch((err) => next(err));
 }
@@ -211,7 +233,7 @@ exports.removeMemberFromTeam = (req, res, next) => {
 exports.askForTeamAdmission = (req, res, next) => {
   const teamId = req.params.teamId;
   const userId = req.user.id;
-  console.log("\n\nfrom teamCtr/askForAdmission 1 - teamId: ", teamId, " userId: ", userId, "\n\n")
+
   Teams.findOne({
     include: { model: Users },
     where: { id: teamId },
@@ -238,12 +260,9 @@ exports.askForTeamAdmission = (req, res, next) => {
         res.status(200).json({ message: `You have already asked for admission to team ${team.team_name}. But admission is still pending.`, title: "Already asked for admission", error: null });  
         return;
       }
-
-      console.log("teamCtr, user: ", req.user.id);
       team
         .addUser(req.user)
         .then(() => {          
-              console.log("before mailer: ", team)
               mailer.askForTeamAdmission(req.user, team, ({ err, info }) => {
                 if (err) {
                   const error = new Error(`Mail to ask for admission wasn't send.`);
@@ -266,12 +285,75 @@ exports.askForTeamAdmission = (req, res, next) => {
 
 //Confirm admission to a team 
 exports.confirmTeamAdmission = ((req, res, next) => {
-  const memberId = req.params.memberId;
+  const userId = req.params.userId;
   const teamId = req.params.teamId;
+  console.log("\n\nuserId: ", userId, " teamId: ", teamId, "\n\n");
 
-  console.log("\n\nconfirmTeamAdmission, memberId", memberId, " teamId: ", teamId, "\n\n");
-  return res.status(200).json({ title: "Confirmed Admission" });
-});
+  Users.findByPk(userId).then((user) => {
+    if (!user) {
+      console.log("no member");
+      const err = new Error(`User with id ${userId} doesn't exist.`);
+      err.status = 404;
+      err.title = "Unknown user";
+      err.instance = `${req.method} ${req.originalUrl}`;
+      return next(err);
+    }
+    Teams.findByPk(teamId, {
+      include: [
+        { model: Users,
+        where: {id: userId}}
+    ],
+    }).then((team) => {
+      if (!team) {
+        console.log("\n\nNo team\n\n");
+        const err = new Error(`Team with id ${teamId} doesn't exist.`);
+        err.status = 404;
+        err.title = "Unknown team";
+        err.instance = `${req.method} ${req.originalUrl}`;
+        return next(err);
+      }
+      //Check if user is already member of the team
+      const membership = team.users.filter((user) => user.users_have_teams.user_id == userId)[0];
+      if (!membership) {
+        console.log("\n\nNo admission\n\n");
+        const err = new Error(`User did not ask for admission to the team.`);
+        err.status = 400;
+        err.title = "No ask for admission";
+        err.instance = `${req.method} ${req.originalUrl}`;
+        return next(err);
+      }
+      if (membership.users_have_teams.admitted === true) {
+        console.log("\n\nalready member\n\n");
+        const err = new Error(`User is already member of the team.`);
+        return res.status(200).json({ title: "Existing membership", message: `User is already member of the team ${team.team_name}.`, team: team });
+      }
+      //update team membership
+      team.addUsers(user, { through: { admitted: true }})
+     .then(() => {
+      Teams.findByPk(teamId, {
+        include: { model: Users,
+        where: { id: userId }}
+      }).then((team) => {         
+              mailer.sendTeamAdmission(user, team, ({ err, info }) => {
+                if (err) {
+                  const error = new Error(`Mail to confirm admission wasn't send.`);
+                  error.status = 400;
+                  error.title = "Mail not send";
+                  error.instance = `${req.method} ${req.originalUrl}`;
+                  error.error = err;
+                  next(error);
+                  return;
+                }
+                return res.status(201).json({ title: "Admission confirmed", message: `E-mail about confirmation of the admission to team ${team.team_name} send to ${user.first_name} ${user.last_name}`, team: team, error: null });
+              });
+            
+        })
+        .catch((err) => next(err));
+      });
+       
+      });
+    });
+  });
 
 //Reject admission to a team 
 exports.rejectTeamAdmission = ((req, res, next) => {

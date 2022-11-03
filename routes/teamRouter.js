@@ -33,11 +33,11 @@ teamRouter
 .get(authMiddleware.isLoggedIn, teamController.askForTeamAdmission);
 
 teamRouter
-.route("/api/v1/confirmAdmission/:teamId/:memberId")
+.route("/api/v1/confirmAdmission/:teamId/:userId")
 .get(teamController.confirmTeamAdmission);
 
 teamRouter
-.route("/api/v1/rejectAdmission/:teamId/:memberId")
+.route("/api/v1/rejectAdmission/:teamId/:userId")
 .get(teamController.rejectTeamAdmission);
 
 module.exports = teamRouter;
