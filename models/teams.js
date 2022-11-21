@@ -18,7 +18,7 @@ const Teams = sequelize.define(
           msg: "Nur Buchstaben, Zahlen und Sonderzeichen !():+- zulässig."
         },
         isUnique(value) {
-         return Sports.findOne({ where: { team_name: value } }).then((team) => {
+         return Teams.findOne({ where: { team_name: value } }).then((team) => {
             if (team) {
                 throw new Error("Team " + value + " already exists.");
               }
