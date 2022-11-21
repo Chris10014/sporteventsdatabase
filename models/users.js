@@ -125,7 +125,4 @@ Users.belongsTo(Roles, {
   foreignKey: "role_id",
 });
 
-//Users can be member in many teams and a team can have up to X team captains
-
-
 module.exports = Users;

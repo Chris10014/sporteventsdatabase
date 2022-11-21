@@ -11,9 +11,84 @@ HTTP error codes
 
 Response bodies
 {
-    "success": true || false //indicates whether an operation run as expected true or not false
+    "success": true || false //indicates whether an operation runs as expected true or not false
     "title": "A brief humen-readable message"
-    "details": "A human-readable explanation"
+    "message": "A human-readable explanation"
     "instance": a URI that identifies the specific occurrence of an error
     "optional":  optional information like password renewal link
 }
+
+//Comments in js
+/**
+ * Returns x raised to the n-th power.
+ *
+ * @param {number} x The number to raise.
+ * @param {number} n The power, must be a natural number.
+ * @return {number} x raised to the n-th power.
+ */
+function pow(x, n) {
+  ...
+}
+
+
+/** Simple function with callback */
+const caculateTotalBillAfterDiscount = (error, billAmount, discountPercentage) => {
+    if(error) {
+        console.log("Error occured!")
+    }
+    console.log(billAmount-(billAmount*discountPercentage)
+}    
+const validateBillAmount = (billAmount) => {
+    if(billAmount <= 0) {
+        console.log("Invalid bill amount")    
+    }
+    else {
+        console.log("Valid bill amount")
+    }
+}
+
+var billAmount = process.argv[2] //retrievs value from console
+var discountPercentage = process.argv[3] //retrievs value from console
+
+setTimeout(caculateTotalBillAfterDiscount, 2000,  undefined, billAmount, discountPercentage)
+validateBillAmount(billAmount)
+
+/** Simple example for promise */
+
+const caculateTotalBillAfterDiscount = (billAmount, discountPercentage) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+        if(discountPercentage <= 0){
+            reject("Invalid discount")
+        }
+        if(billAmount > 2000) {
+        discountPercentage = discountPercentage*2
+        resolve(billAmount - (billAmount*discountPercentage))
+        }
+        resolve(billAmount - (billAmount*discountPercentage))
+        }, 2000)
+    })
+}
+    
+const validateBillAmount = (billAmount) => {
+    if(billAmount <= 0) {
+        console.log("Invalid bill amount")
+    }
+    else {
+        console.log("Valid bill amount")
+
+    }
+}
+
+var billAmount = 2000
+var discountPercentage = 0.25
+
+caculateTotalBillAfterDiscount(billAmount, discountPercentage)
+.then((result) => {
+console.log(result)
+}, error => {
+    console.log(error)
+    }
+)
+
+validateBillAmount(billAmount)
