@@ -7,7 +7,7 @@ const mailer = require("../services/mailer");
 const utils = require("./utils");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const { roles } = require("../permissions/users");
+const { roles } = require("../permissions/rolePermissions");
 
 //index
 exports.index = (res, req, next) => {

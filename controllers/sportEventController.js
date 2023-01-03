@@ -38,6 +38,7 @@ exports.createSportEvent = ((req, res, next) => {
     res.send("Data is missing.");
     return;
   }
+    req.body.owner_id = req.user.id;
     SportEvents.create(req.body)
       .then(
         (sportEvent) => {
@@ -126,4 +127,24 @@ exports.deleteSportEventById = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     res.send(`SportEvent with Id ${sportEventId} deleted.`);
   });
+};
+
+//Scoped queries
+/**
+ *
+ * @param {obj} me user object
+ * @param {array} users all users
+ * @returns {array} filtered users dependend on the grants of me
+ */
+const scopedSportEvents = (me, sportEvents) => {
+  if (me.role_id == null) {
+    const err = new Error();
+    err.status = 400;
+    err.title = "Role is missing";
+    err.message = "You don't have any role assigned.";
+    return err;
+  }
+  const permission = roles.can(me.role.name.toLowerCase()).readAny("sportEvents");
+  if (permission.granted) return sportEvents;
+  return users.filter((sportEvents) => sportEvents.owner_id * 1 === me.id * 1);
 };

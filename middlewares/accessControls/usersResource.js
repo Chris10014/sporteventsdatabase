@@ -1,6 +1,6 @@
 "use strict"
 
-const { roles } = require("../permissions/users");
+const { roles } = require("../../permissions/rolePermissions");
 
 //Resource /users
 /**
