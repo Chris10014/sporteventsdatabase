@@ -1,11 +1,11 @@
 "use strict";
 
 const SportEvents = require("../../models/sportEvents");
-const { roles } = require("../../permissions/rolePermissions");
+const { rolePermissions } = require("../../permissions/rolePermissions");
 
 //Resource /sportEvents
 /**
- * Checks the allowed actions for a user on the resource /users
+ * Checks the allowed actions for a user on the resource /sportEvents
  * @params {string} action - one of the CRUD actions create || read || update || delete
  * 
  * @returns {Object} req.permission
@@ -21,8 +21,8 @@ exports.isAllowedToHandleSportEventsById = (action) => {
       .then((sportEvent) => {
         const ownerId = sportEvent.owner_id;
         const permission = req.user.id*1 == ownerId*1 
-        ? roles.can(req.user.role.name.toLowerCase())[actionOwn]("sportEvents") 
-        : roles.can(req.user.role.name.toLowerCase())[actionAny]("sportEvents");
+        ? rolePermissions.can(req.user.role.name.toLowerCase())[actionOwn]("sportEvents") 
+        : rolePermissions.can(req.user.role.name.toLowerCase())[actionAny]("sportEvents");
         if (permission.granted) {
           req.permission = permission;
           return next();          
@@ -38,7 +38,7 @@ exports.isAllowedToHandleSportEventsById = (action) => {
 };
 
 exports.isAllowedToCreateSportEvents = (req, res, next) => {
-  const permission = roles.can(req.user.role.name.toLowerCase()).createAny("sportEvents");
+  const permission = rolePermissions.can(req.user.role.name.toLowerCase()).createAny("sportEvents");
   if (permission.granted) {
     req.permission = permission;
     return next();

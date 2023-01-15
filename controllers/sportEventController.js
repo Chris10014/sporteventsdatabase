@@ -1,3 +1,5 @@
+"use strict";
+
 const SportEvents = require("../models/sportEvents");
 const Countries = require("../models/countries");
 const Teams = require("../models/teams");

@@ -7,7 +7,7 @@ const mailer = require("../services/mailer");
 const utils = require("./utils");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const { roles } = require("../permissions/rolePermissions");
+const { rolePermissions } = require("../permissions/rolePermissions");
 
 //index
 exports.index = (res, req, next) => {
@@ -255,7 +255,7 @@ const scopedUsers = (me, users) => {
     err.message = "You don't have any role assigned.";
     return err;
   }
-  const permission = roles.can(me.role.name.toLowerCase()).readAny("users");
+  const permission = rolePermissions.can(me.role.name.toLowerCase()).readAny("users");
   if (permission.granted) return users;
   return users.filter((user) => user.id * 1 === me.id * 1);
 };

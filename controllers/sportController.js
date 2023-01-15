@@ -1,3 +1,4 @@
+"use strict";
 const Sports = require("../models/sports");
 
 //index

@@ -9,21 +9,21 @@ const { rolePermissions } = require("../../permissions/rolePermissions");
  * 
  * @returns {Object} req.permission
  */
-exports.isAllowedToHandleUsersById = ((action) => {
+exports.isAllowedToHandleRolesById = ((action) => {
   const actionAny = action + "Any";
   const actionOwn = action + "Own";
 
   return (req, res, next) => {
   const permission = (req.user.id == req.params.userId)
-   ? rolePermissions.can(req.user.role.name.toLowerCase())[actionOwn]('users')
-   : rolePermissions.can(req.user.role.name.toLowerCase())[actionAny]('users');
+   ? rolePermissions.can(req.user.role.name.toLowerCase())[actionOwn]('rolePermissions')
+   : rolePermissions.can(req.user.role.name.toLowerCase())[actionAny]('rolePermissions');
 
    if(permission.granted) {
     req.permission = permission;
     next();
     return;
    }
-    const error = new Error(`You are not allowed to ${action} data from /users/${req.params.userId}.`);
+    const error = new Error(`You are not allowed to ${action} data from /rolePermissions/${req.params.roleId}.`);
     error.status = 403;
     error.title = "Not allowed";
     error.instance = `${req.method} ${req.originalUrl}`;
@@ -31,13 +31,13 @@ exports.isAllowedToHandleUsersById = ((action) => {
   }
 });
 
-exports.isAllowedToCreateUsers = (req, res, next) => {
-  const permission = rolePermissions.can(req.user.role.name.toLowerCase()).createAny("users");
+exports.isAllowedToCreateRoles = (req, res, next) => {
+  const permission = rolePermissions.can(req.user.role.name.toLowerCase()).createAny("rolePermissions");
   if(permission.granted) {
     req.permission = permission;
     return next()
   }  
-  const error = new Error("You are not allowed to create new users.");
+  const error = new Error("You are not allowed to create new rolePermissions.");
   error.status = 403;
   error.title = "Not allowed";
   error.instance = `${req.method} ${req.originalUrl}`;

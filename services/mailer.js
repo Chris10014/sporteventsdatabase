@@ -40,9 +40,9 @@ exports.askForTeamAdmission = async (user, team, callback) => {
   //find team captains
   const teamCaptains = team.users.filter((member) => member.users_have_teams.team_captain === true)
     if(teamCaptains.length == 0) {
-      return callback({ err: {title: "No team captain", message: `The team ${team.team_name} doesn't have a team captain. You can't admit to this team.` }, info: null })
+      return callback({ err: {title: "No team captain", message: `The team ${team.team_name} doesn't have a team captain. You can't admit to this team.`, becomeTeamCaptain: true, info: null }})
     }
-     `${variables.base_url}:${variables.port}/api/v1/confirmAdmission/${team.id}/${user.id}`;
+    const confirmationLink = `${variables.base_url}:${variables.port}/api/v1/confirmAdmission/${team.id}/${user.id}`;
     const rejectAdmissionLink = `${variables.base_url}:${variables.port}/api/v1/rejectAdmission/${team.id}/${user.id}`;
 
     let eMailCounter = 0;

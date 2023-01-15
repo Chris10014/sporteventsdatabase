@@ -3,7 +3,8 @@
 const express = require("express");
 const teamController = require("../controllers/teamController");
 const teamRouter = express.Router();
-const { isLoggedIn, hasRole, isTeamCaptain }= require("../middlewares/auth");
+const { isLoggedIn, isTeamCaptain }= require("../middlewares/auth");
+const { isAllowedToHandleTeamsById } = require("../middlewares/accessControls/teamsResource");
 teamRouter.use(express.json());
 
 teamRouter
@@ -11,14 +12,14 @@ teamRouter
   .get(teamController.getAllTeams)
   .post(isLoggedIn, teamController.createTeam)
   .put(isLoggedIn, teamController.updateTeam) //Not supported
-  .delete(isLoggedIn, hasRole("admin"), teamController.deleteTeams);//Not supported
+  .delete(isLoggedIn, teamController.deleteTeams);//Not supported
 
 teamRouter
   .route("/api/v1/teams/:teamId")
   .get(teamController.getTeamById)
   .post(isLoggedIn, teamController.createTeamWithId) //Not supported
-  .put(isLoggedIn, teamController.updateTeamById)
-  .delete(isLoggedIn,hasRole("admin"), teamController.deleteTeamById);
+  .put(isLoggedIn, isAllowedToHandleTeamsById("update"), teamController.updateTeamById)
+  .delete(isLoggedIn, isAllowedToHandleTeamsById("delete"), teamController.deleteTeamById);
 
 teamRouter
   .route("/api/v1/addMember/:teamId/:userId")

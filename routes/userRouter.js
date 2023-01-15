@@ -2,7 +2,7 @@
 
 const express = require("express");
 const userController = require("../controllers/userController");
-const { isLoggedIn, hasRole } = require("../middlewares/auth");
+const { isLoggedIn } = require("../middlewares/auth");
 const { isAllowedToHandleUsersById, isAllowedToCreateUsers } = require("../middlewares/accessControls/usersResource");
 const userRouter = express.Router();
 userRouter.use(express.json());

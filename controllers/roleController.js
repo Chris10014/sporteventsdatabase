@@ -1,4 +1,7 @@
+"use strict";
+
 const Roles = require("../models/roles");
+const { rolePermissions } = require("../permissions/rolePermissions");
 
 //index
 exports.index = ((res, req, next) => {
@@ -6,13 +9,13 @@ exports.index = ((res, req, next) => {
 });
 
 //get all Roles
-exports.getAllRoles = ((req,res, next) => {
+exports.getAllRoles = ((req, res, next) => {
     Roles.findAll({ where: req.query })
       .then(
         (roles) => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
-          res.json(roles);
+          res.json(scopedUsers(req.user, roles));
         },
         (err) => next(err)
       )
@@ -116,4 +119,24 @@ exports.deleteRoleById = (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     res.send(`Role with Id ${roleId} deleted.`);
   });
+};
+
+//Scoped queries
+/**
+ *
+ * @param {obj} me user object
+ * @param {array} users all users
+ * @returns {array} filtered users dependend on the grants of me
+ */
+const scopedUsers = (me, roles) => {
+  if (me.role_id == null) {
+    const err = new Error();
+    err.status = 400;
+    err.title = "Role is missing";
+    err.message = "You don't have any role assigned.";
+    return err;
+  }
+  const permission = rolePermissions.can(me.role.name.toLowerCase()).readAny("roles");
+  if (permission.granted) return roles;
+  return roles.filter((role) => role.id * 1 === me.role_id * 1);
 };
