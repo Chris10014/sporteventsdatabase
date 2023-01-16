@@ -38,29 +38,27 @@ exports.sendActivationLink = async (email, userId, activationToken, firstName, r
 
 exports.askForTeamAdmission = async (user, team, callback) => {
   //find team captains
-  const teamCaptains = team.users.filter((member) => member.users_have_teams.team_captain === true)
-    if(teamCaptains.length == 0) {
-      return callback({ err: {title: "No team captain", message: `The team ${team.team_name} doesn't have a team captain. You can't admit to this team.`, becomeTeamCaptain: true, info: null }})
-    }
-    const confirmationLink = `${variables.base_url}:${variables.port}/api/v1/confirmAdmission/${team.id}/${user.id}`;
-    const rejectAdmissionLink = `${variables.base_url}:${variables.port}/api/v1/rejectAdmission/${team.id}/${user.id}`;
+  const teamCaptains = team.users.filter((member) => member.users_have_teams.team_captain === true);
 
-    let eMailCounter = 0;
-    teamCaptains.map(async (teamCaptain) => {
-      eMailCounter++;
-      const mailData = {
-        from: "teams@bigpoints.de",
-        to: teamCaptain.email,
-        subject: `Aufnahme ins Team ${team.team_name}`,
-        text: `Hallo ${teamCaptain.first_name}, \n\n${user.first_name} ${user.last_name} möchte in deinem Team ${team.team_name} aufgenommen werden. Klicke für die Aufnahme ins Team auf den Link ${confirmationLink}. \nUm die Anfrage abzulehnen, klicke hier ${rejectAdmissionLink}.`,
-        html: `<p><b>Hallo ${teamCaptain.first_name}</b>,</br></br>${user.first_name} ${user.last_name} möchte in deinem Team <b>${team.team_name}</b> aufgenommen werden. Klicke für die Aufnahme ins Team auf den Link <b><a href="${confirmationLink}">Aufnahme bestätigen</a></b>. Um die Anfrage abzulehnen, klicke hier <b><a href="${rejectAdmissionLink}">Aufnahme ablehnen</a></b>.`,
-      };
+  const confirmationLink = `${variables.base_url}:${variables.port}/api/v1/confirmAdmission/${team.id}/${user.id}`;
+  const rejectAdmissionLink = `${variables.base_url}:${variables.port}/api/v1/rejectAdmission/${team.id}/${user.id}`;
 
-      return await transport.sendMail(mailData, (err, info) => {
-        info.eMailCounter = eMailCounter;
-        return callback({ err, info });
-      });
+  let eMailCounter = 0;
+  teamCaptains.map(async (teamCaptain) => {
+    eMailCounter++;
+    const mailData = {
+      from: "teams@bigpoints.de",
+      to: teamCaptain.email,
+      subject: `Aufnahme ins Team ${team.team_name}`,
+      text: `Hallo ${teamCaptain.first_name}, \n\n${user.first_name} ${user.last_name} möchte in deinem Team ${team.team_name} aufgenommen werden. Klicke für die Aufnahme ins Team auf den Link ${confirmationLink}. \nUm die Anfrage abzulehnen, klicke hier ${rejectAdmissionLink}.`,
+      html: `<p><b>Hallo ${teamCaptain.first_name}</b>,</br></br>${user.first_name} ${user.last_name} möchte in deinem Team <b>${team.team_name}</b> aufgenommen werden. Klicke für die Aufnahme ins Team auf den Link <b><a href="${confirmationLink}">Aufnahme bestätigen</a></b>. Um die Anfrage abzulehnen, klicke hier <b><a href="${rejectAdmissionLink}">Aufnahme ablehnen</a></b>.`,
+    };
+
+    return await transport.sendMail(mailData, (err, info) => {
+      info.eMailCounter = eMailCounter;
+      return callback({ err, info });
     });
+  });
 };
 
 exports.sendTeamAdmission = async (user, team, callback) => {

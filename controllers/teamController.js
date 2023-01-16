@@ -317,23 +317,30 @@ exports.askForTeamAdmission = (req, res, next) => {
       team
         .addUser(req.user)
         .then(() => {
+          //find team captains
+          const teamCaptains = team.users.filter((member) => member.users_have_teams.team_captain === true);
+          if (teamCaptains.length == 0) {
+            team.addUsers(req.user, { through: { admitted: true, team_captain: true } });
+            return res.status(201).json({ success: true, title: "Asked for Admission", message: `${team.team_name} has no members. Therefore admission confirmed automatically for team ${team.team_name} and user ${req.user.id} became team captain.` });
+          }
+
           mailer.askForTeamAdmission(req.user, team, ({ err, info }) => {
             if (err) {
-              console.log("err: ", err)
-              if(err.becomeTeamCaptain) { //Team has no team captain
+              console.log("err: ", err);
+              if (err.becomeTeamCaptain) {
+                //Team has no team captain
                 team.addUsers(req.user, { through: { admitted: true, team_captain: true } });
                 return res.status(201).json({ success: true, title: "Asked for Admission", message: `${team.team_name} has still no members. Therefore admission confirmed automatically for team ${team.team_name} and user ${req.user.id} became team captain.` });
-
               } else {
-                 const error = new Error(`Mail to ask for admission wasn't send.`);
-                 error.status = 400;
-                 error.title = "Mail not send";
-                 error.instance = `${req.method} ${req.originalUrl}`;
-                 error.resendAskForAdmissionLink = `${variables.base_url}:${variables.port}/api/V1/askForAdmission/${req.user.id}/${team.id}`;
-                 error.error = err;
-                 next(error);
-                 return;
-              }             
+                const error = new Error(`Mail to ask for admission wasn't send.`);
+                error.status = 400;
+                error.title = "Mail not send";
+                error.instance = `${req.method} ${req.originalUrl}`;
+                error.resendAskForAdmissionLink = `${variables.base_url}:${variables.port}/api/V1/askForAdmission/${req.user.id}/${team.id}`;
+                error.error = err;
+                next(error);
+                return;
+              }
             }
             return res.status(201).json({ success: true, title: "Admission confirmed", message: `E-mail(s) to ask for admission to team ${team.team_name} send to ${info.eMailCounter} team captain(s)`, eMailCounter: info.eMailCounter });
           });
