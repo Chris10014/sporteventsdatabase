@@ -5,6 +5,8 @@ const Countries = require("../models/countries");
 const Teams = require("../models/teams");
 const Users = require("../models/users");
 const EventDates = require("../models/eventDates");
+const Races = require("../models/races");
+const Sports = require("../models/sports")
 
 //index
 exports.index = ((res, req, next) => {
@@ -18,7 +20,10 @@ exports.getAllSportEvents = ((req,res, next) => {
       { model: Countries, attributes: [ "country_code", "country_name_en", "country_name_de" ]},
       { model: EventDates, attributes: [ "start", "end" ]},
       { model: Teams, as: "host", attributes: [ "team_name" ]}, 
-      { model: Users, as: "owner", attributes: [ "first_name", "last_name" ]}
+      { model: Users, as: "owner", attributes: [ "first_name", "last_name" ]},
+      { model: Races, include: [
+        { model: Sports, as: "sport" }
+      ]},
       ]})
       .then(
         (sportEvents) => {

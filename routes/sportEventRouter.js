@@ -1,6 +1,7 @@
 "use strict"
 
 const express = require("express");
+const cors = require("./cors");
 const sportEventController = require("../controllers/sportEventController");
 const { hasRole } = require("../middlewares/auth");
 const { isAllowedToCreateSportEvents, isAllowedToHandleSportEventsById } = require("../middlewares/accessControls/sportEventsResource");
@@ -10,7 +11,7 @@ sportEventRouter.use(express.json());
 
 sportEventRouter
   .route("/api/v1/sportEvents", sportEventController.index)
-  .get(sportEventController.getAllSportEvents)
+  .get(cors.cors, sportEventController.getAllSportEvents)
   .post(authMiddleware.isLoggedIn, isAllowedToCreateSportEvents, sportEventController.createSportEvent)
   .put(authMiddleware.isLoggedIn, sportEventController.updateSportEvent) //Not supported
   .delete(authMiddleware.isLoggedIn, sportEventController.deleteSportEvents);//Not supported
