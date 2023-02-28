@@ -16,6 +16,11 @@ exports.rolePermissions = (() => {
   .grant("editor").resource("sportEvents").createAny().updateAny() 
   .grant("admin").resource("sportEvents").extend("editor").deleteAny()
   .grant("superadmin").resource("sportEvents").extend("admin")
+   //resource countries
+  .grant("eventowner").resource("countries").createAny().updateOwn()
+  .grant("editor").resource("countries").createAny().updateAny() 
+  .grant("admin").resource("countries").extend("editor").deleteAny()
+  .grant("superadmin").resource("countries").extend("admin")
   //races
   .grant("eventowner").resource("races").createOwn().updateOwn().deleteOwn()
   .grant("editor").resource("races").createAny().updateAny().deleteAny()

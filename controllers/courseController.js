@@ -1,6 +1,7 @@
 const Courses = require("../models/courses");
 const Sports = require("../models/sports");
 const Races = require("../models/races");
+const SportEvents = require("../models/sportEvents");
 
 //index
 exports.index = ((res, req, next) => {
@@ -14,6 +15,7 @@ exports.getAllCourses = ((req,res, next) => {
       include: [
         // { model: Races, attributes: { exclude: [ "created_at", "updated_at" ]}},
         { model: Sports, attributes: { exclude: [ "created_at", "updated_at" ]}},
+        { model: Races, include: { model: SportEvents } }
       ],
     })
       .then(

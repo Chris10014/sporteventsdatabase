@@ -8,12 +8,13 @@ exports.index = ((res, req, next) => {
 
 //get all EventDates
 exports.getAllEventDates = ((req,res, next) => {
-    EventDates.findAll({ 
+    EventDates.findAll({
       where: req.query,
       include: {
         model: SportEvents,
-        attributes: [ "created_at", "updated_at" ] // { exclude: ["created_at"] }
-      } 
+        attributes: ["created_at", "updated_at"], // { exclude: ["created_at"] }
+      },
+      order: ["id", "DESC"],
     })
       .then(
         (eventDates) => {

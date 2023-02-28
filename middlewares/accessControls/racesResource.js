@@ -19,7 +19,7 @@ exports.isAllowedToHandleRacesById = (action) => {
     Races.findByPk(req.params.raceId, { include: SportEvents })
       .then((race) => {
         //find out if user is owner of the related event ...
-        console.log("race: ", race)
+        console.log("race: ", race.sportEvent)
         const ownerId = race.sportEvent.owner_id;
         const permission = req.user.id * 1 == ownerId * 1 
         ? rolePermissions.can(req.user.role.name.toLowerCase())[actionOwn]("races") 

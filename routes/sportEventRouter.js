@@ -11,16 +11,22 @@ sportEventRouter.use(express.json());
 
 sportEventRouter
   .route("/api/v1/sportEvents", sportEventController.index)
+  .options(cors.corsWithOptions, (req, res) => {
+    res.sendStatus(200);
+  })
   .get(cors.cors, sportEventController.getAllSportEvents)
-  .post(authMiddleware.isLoggedIn, isAllowedToCreateSportEvents, sportEventController.createSportEvent)
-  .put(authMiddleware.isLoggedIn, sportEventController.updateSportEvent) //Not supported
-  .delete(authMiddleware.isLoggedIn, sportEventController.deleteSportEvents);//Not supported
+  .post(cors.corsWithOptions, authMiddleware.isLoggedIn, isAllowedToCreateSportEvents, sportEventController.createSportEvent)
+  .put(cors.corsWithOptions, authMiddleware.isLoggedIn, sportEventController.updateSportEvent) //Not supported
+  .delete(cors.corsWithOptions, authMiddleware.isLoggedIn, sportEventController.deleteSportEvents);//Not supported
 
 sportEventRouter
   .route("/api/v1/sportEvents/:sportEventId")
-  .get(sportEventController.getSportEventById)
-  .post(authMiddleware.isLoggedIn, isAllowedToCreateSportEvents, sportEventController.createSportEventWithId) //Not supported
-  .put(authMiddleware.isLoggedIn, isAllowedToHandleSportEventsById("update"), sportEventController.updateSportEventById)
-  .delete(authMiddleware.isLoggedIn, isAllowedToHandleSportEventsById("delete"), sportEventController.deleteSportEventById);
+  .options(cors.corsWithOptions, (req, res) => {
+    res.sendStatus(200);
+  })
+  .get(cors.cors, sportEventController.getSportEventById)
+  .post(cors.corsWithOptions, authMiddleware.isLoggedIn, isAllowedToCreateSportEvents, sportEventController.createSportEventWithId) //Not supported
+  .put(cors.corsWithOptions, authMiddleware.isLoggedIn, isAllowedToHandleSportEventsById("update"), sportEventController.updateSportEventById)
+  .delete(cors.corsWithOptions, authMiddleware.isLoggedIn, isAllowedToHandleSportEventsById("delete"), sportEventController.deleteSportEventById);
 
 module.exports = sportEventRouter;

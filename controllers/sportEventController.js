@@ -6,7 +6,8 @@ const Teams = require("../models/teams");
 const Users = require("../models/users");
 const EventDates = require("../models/eventDates");
 const Races = require("../models/races");
-const Sports = require("../models/sports")
+const Sports = require("../models/sports");
+const Courses = require("../models/courses");
 
 //index
 exports.index = ((res, req, next) => {
@@ -15,16 +16,23 @@ exports.index = ((res, req, next) => {
 
 //get all SportEvents
 exports.getAllSportEvents = ((req,res, next) => {
-    SportEvents.findAll({ where: req.query, 
+    SportEvents.findAll({
+      where: req.query,
       include: [
-      { model: Countries, attributes: [ "country_code", "country_name_en", "country_name_de" ]},
-      { model: EventDates, attributes: [ "start", "end" ]},
-      { model: Teams, as: "host", attributes: [ "team_name" ]}, 
-      { model: Users, as: "owner", attributes: [ "first_name", "last_name" ]},
-      { model: Races, include: [
-        { model: Sports, as: "sport" }
-      ]},
-      ]})
+        { model: Countries, attributes: ["country_code", "country_name_en", "country_name_de"] },
+        { model: EventDates, attributes: ["id", "start", "end"] },
+        { model: Teams, as: "host", attributes: ["team_name"] },
+        { model: Users, as: "owner", attributes: ["first_name", "last_name"] },
+        {
+          model: Races,
+          include: [
+            { model: Sports, as: "sport" },
+            { model: Courses, include: [{ model: Sports }] },
+          ],
+        },
+      ],
+      order: [[{ model: EventDates }, "start", "ASC"]],
+    })
       .then(
         (sportEvents) => {
           res.statusCode = 200;
@@ -79,9 +87,13 @@ exports.deleteSportEvents = (req, res, next) => {
 exports.getSportEventById = ((req, res, next) => {
     SportEvents.findByPk(req.params.sportEventId, { include: Countries })
       .then((sportEvent) => {
+        if(sportEvent) {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");
         res.json(sportEvent);
+        } else {
+          res.status(404).json({ success: false, status: "Not found", error: `Sport Event with id ${req.param.id} seems not to exist.`, sportEvent: null });
+        }
       })
       .catch((err) => next(err));
 });
