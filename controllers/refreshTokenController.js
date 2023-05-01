@@ -124,7 +124,6 @@ exports.loginUser = async (req, res, next) => {
               );
             res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000} ) //refreshToken is valid for 1 day
             res.status(200).json({ success: true, status: "Logged in", accessToken: accessToken, error: null });
-            console.log("refreshToken: ", refreshToken);
             return;
           } else {
             const error = new Error("Username and password don't match.");

@@ -12,6 +12,9 @@ const path = require("path"); //Modul um Pfadangaben zu generieren
 const sequelize = require("./services/database");
 const express = require("express");
 const logger = require("morgan");
+const cors = require("cors");
+
+
 
 const countryRouter = require("./routes/countryRouter");
 const teamRouter = require("./routes/teamRouter");
@@ -26,15 +29,22 @@ const courseRouter = require("./routes/courseRouter");
 const sendMailRouter = require("./routes/sendMailRouter");
 const authMiddleware = require("./middlewares/auth");
 
-// sequelize.sync({ alter: true })
-//   .then((result) => {
-//     console.log("Countries table created. ", result);
-//   })
-//   .catch((err) => {
-//     console.log("Error creating countries table: ", err);
-//   });
+sequelize.sync({ alter: true })
+  .then((result) => {
+    console.log("Countries table created. ", result);
+  })
+  .catch((err) => {
+    console.log("Error creating countries table: ", err);
+  });
 
 const app = express();
+
+app.use(
+  cors({
+    origin:["http://localhost:3000", "https://localhost:3443"],
+    methods: [ "GET", "POST", "PUT", "DELETE" ]
+  })
+)
 
 const variables = require("./config/variables"); //Bezieht die Umgebungsvariablen aus variables Objekt
 const { sendConfirmationMail } = require("./controllers/sendMailController");

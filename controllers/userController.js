@@ -141,7 +141,9 @@ exports.getUserById = (req, res, next) => {
     return;
   }
   Users.findByPk(req.params.userId, {
-    include: [{ model: Teams, attributes: ["team_name"] }],
+    include: [
+      { model: Roles, attributes: ["name"] },
+      { model: Teams, attributes: ["team_name"] }],
     attributes: {
       exclude: ["password"],
     },
