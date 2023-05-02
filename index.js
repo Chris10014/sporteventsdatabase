@@ -13,6 +13,7 @@ const sequelize = require("./services/database");
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 
 
@@ -29,13 +30,13 @@ const courseRouter = require("./routes/courseRouter");
 const sendMailRouter = require("./routes/sendMailRouter");
 const authMiddleware = require("./middlewares/auth");
 
-sequelize.sync({ alter: true })
-  .then((result) => {
-    console.log("Countries table created. ", result);
-  })
-  .catch((err) => {
-    console.log("Error creating countries table: ", err);
-  });
+// sequelize.sync({ alter: true })
+//   .then((result) => {
+//     console.log("Countries table created. ", result);
+//   })
+//   .catch((err) => {
+//     console.log("Error creating countries table: ", err);
+//   });
 
 const app = express();
 
@@ -48,13 +49,19 @@ app.use(
 
 const variables = require("./config/variables"); //Bezieht die Umgebungsvariablen aus variables Objekt
 const { sendConfirmationMail } = require("./controllers/sendMailController");
+const refreshTokenRouter = require("./routes/refreshTokenRouter");
 
 const port = variables.port;
 
 app.use(logger("dev")); //Logs all requests to console
 
+//middleware foe cookies
+app.use(cookieParser());
+
+//routes
 app.use(authRouter);
 app.use(userRouter);
+app.use(refreshTokenRouter);
 
 // app.use(authMiddleware.isLoggedIn);
 

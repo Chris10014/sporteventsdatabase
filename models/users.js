@@ -97,7 +97,7 @@ const Users = sequelize.define(
       allowNull: true,
     },
     refresh_token: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       defaultValue: "",
     },
     role_id: {
